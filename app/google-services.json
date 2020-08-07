@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "974236364725",
+    "firebase_url": "https://learenaadmin.firebaseio.com",
+    "project_id": "learenaadmin",
+    "storage_bucket": "learenaadmin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:974236364725:android:8eb0f68b4e52abf82473fc",
+        "android_client_info": {
+          "package_name": "gustavo.projects.learenaadmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "974236364725-37a4g058bjlkllmbv6kb6jqdvgikbq4r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBF9at4ANM9J9lVR00HcWuCiO3DPC-9Y3Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "974236364725-37a4g058bjlkllmbv6kb6jqdvgikbq4r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
