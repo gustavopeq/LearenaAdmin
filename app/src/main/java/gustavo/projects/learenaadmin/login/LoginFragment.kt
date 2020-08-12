@@ -1,4 +1,4 @@
-package gustavo.projects.learenaadmin
+package gustavo.projects.learenaadmin.login
 
 import android.os.Bundle
 import android.text.Editable
@@ -7,11 +7,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import gustavo.projects.learenaadmin.R
 import gustavo.projects.learenaadmin.databinding.LoginFragmentBinding
+import kotlinx.android.synthetic.main.login_fragment.*
 
 
 class LoginFragment : Fragment() {
@@ -35,6 +36,7 @@ class LoginFragment : Fragment() {
 
         binding.loginViewModel = viewModel
 
+        // EMAIL TEXT FIELD UPDATE
         binding.emailEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 // Nothing to implement
@@ -49,6 +51,7 @@ class LoginFragment : Fragment() {
             }
         })
 
+        // PASSWORD TEXT FIELD UPDATE
         binding.passwordEditText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 // Nothing to implement
@@ -64,6 +67,8 @@ class LoginFragment : Fragment() {
         })
 
         binding.signinBtn.setOnClickListener { viewModel.signIn(binding.emailEditText.text.toString(), binding.passwordEditText.text.toString()) }
+
+        binding.newAccountBtn.setOnClickListener { findNavController().navigate(R.id.action_loginFragment_to_signupFragment) }
 
         return binding.root
     }

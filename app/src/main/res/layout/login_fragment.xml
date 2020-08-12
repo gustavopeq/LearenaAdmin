@@ -6,14 +6,14 @@
     <data>
         <variable
             name="loginViewModel"
-            type="gustavo.projects.learenaadmin.LoginViewModel" />
+            type="gustavo.projects.learenaadmin.login.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".LoginFragment">
+        tools:context=".login.LoginFragment">
 
         <TextView
             android:id="@+id/textView"
@@ -43,7 +43,7 @@
             android:id="@+id/passwordEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="24dp"
             android:ems="10"
             android:hint="Password"
             android:inputType="textEmailAddress"
@@ -59,17 +59,20 @@
             android:enabled="false"
             android:text="@string/common_signin_button_text"
             app:layout_constraintEnd_toEndOf="@+id/passwordEditText"
+            app:layout_constraintStart_toStartOf="@+id/passwordEditText"
             app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/newAccountBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:text="Register"
-            app:layout_constraintBottom_toBottomOf="@+id/signinBtn"
-            app:layout_constraintEnd_toStartOf="@+id/signinBtn"
-            app:layout_constraintTop_toTopOf="@+id/signinBtn" />
+            android:layout_marginTop="24dp"
+            android:clickable="true"
+            android:text="Don't have an account?"
+            app:layout_constraintEnd_toEndOf="@+id/signinBtn"
+            app:layout_constraintHorizontal_bias="0.508"
+            app:layout_constraintStart_toStartOf="@+id/signinBtn"
+            app:layout_constraintTop_toBottomOf="@+id/signinBtn" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,19 +1,12 @@
-package gustavo.projects.learenaadmin
+package gustavo.projects.learenaadmin.login
 
 import android.util.Log
-import android.widget.Toast
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 class LoginViewModel : ViewModel() {
-
-//    private val _email = MutableLiveData<String>()
-//    val email: LiveData<String>
-//        get() = _email
 
 
     private var auth: FirebaseAuth = Firebase.auth
