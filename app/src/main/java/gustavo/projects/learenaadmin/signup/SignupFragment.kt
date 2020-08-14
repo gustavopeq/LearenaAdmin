@@ -49,7 +49,7 @@ class SignupFragment : Fragment() {
             && !binding.emailEditText.text.isNullOrBlank() && binding.emailEditText.text.contains("@", true)
             && !binding.firstNameEditText.text.isNullOrBlank() && !binding.lastNameEditText.text.isNullOrBlank()
         ) {
-            viewModel.createUser(binding.emailEditText.text.toString(), binding.passwordEditText.text.toString())
+            viewModel.createUser(binding.firstNameEditText.text.toString(), binding.emailEditText.text.toString(), binding.passwordEditText.text.toString())
         }else{
             Toast.makeText(context, "Incorrect or missing field!", Toast.LENGTH_LONG).show()
         }
