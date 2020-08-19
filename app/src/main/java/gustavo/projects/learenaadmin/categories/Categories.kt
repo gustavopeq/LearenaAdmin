@@ -26,11 +26,6 @@ class Categories : Fragment() {
 
         viewModel = ViewModelProvider(this).get(CategoriesViewModel::class.java)
 
-        binding.btn.setOnClickListener { }
-
-
-
-
         return binding.root
     }
 }
