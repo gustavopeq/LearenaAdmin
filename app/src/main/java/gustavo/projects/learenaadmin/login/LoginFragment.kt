@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import gustavo.projects.learenaadmin.R
@@ -66,11 +67,22 @@ class LoginFragment : Fragment() {
             }
         })
 
-        binding.signinBtn.setOnClickListener { viewModel.signIn(binding.emailEditText.text.toString(), binding.passwordEditText.text.toString()) }
+        binding.signinBtn.setOnClickListener {
+            viewModel.signIn(binding.emailEditText.text.toString(), binding.passwordEditText.text.toString())
+
+        }
 
         binding.newAccountBtn.setOnClickListener { findNavController().navigate(R.id.action_loginFragment_to_signupFragment) }
 
+        viewModel.loginSuccessful.observe(viewLifecycleOwner, Observer<Boolean>{loginSuccessful ->
+            if(loginSuccessful) loadCategoriesFragment()
+        })
+
         return binding.root
+    }
+
+    private fun loadCategoriesFragment() {
+        findNavController().navigate(R.id.action_loginFragment_to_categories)
     }
 
 }

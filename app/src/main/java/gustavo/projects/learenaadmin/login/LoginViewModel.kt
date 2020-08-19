@@ -1,6 +1,8 @@
 package gustavo.projects.learenaadmin.login
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -12,6 +14,10 @@ class LoginViewModel : ViewModel() {
     private var auth: FirebaseAuth = Firebase.auth
     private lateinit var user: FirebaseUser
 
+    private val _loginSuccessful = MutableLiveData<Boolean>()
+    val loginSuccessful: LiveData<Boolean>
+        get() = _loginSuccessful
+
     fun signIn(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener() { task ->
@@ -22,6 +28,7 @@ class LoginViewModel : ViewModel() {
                         Log.d("print", "Please, verify your email first!")
                     }else {
                         Log.d("print", "Login successful")
+                        _loginSuccessful.value = true
                     }
                 } else {
                     // If sign in fails, display a message to the user.
