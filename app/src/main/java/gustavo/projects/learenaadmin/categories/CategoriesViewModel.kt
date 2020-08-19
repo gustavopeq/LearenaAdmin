@@ -17,9 +17,11 @@ class CategoriesViewModel : ViewModel() {
 
     val db = Firebase.firestore
 
-    private val _arrayOfCategories = MutableLiveData<MutableSet<String>>()
-    val arrayOfCategories: LiveData<MutableSet<String>>
-        get() = _arrayOfCategories
+    private var arrayOfCategories = mutableSetOf<String>()
+
+    private val _listOfCategoryItem = MutableLiveData<ArrayList<CategoryItem>>()
+    val listOfCategoryItem: LiveData<ArrayList<CategoryItem>>
+        get() = _listOfCategoryItem
 
 
     init {
@@ -35,21 +37,24 @@ class CategoriesViewModel : ViewModel() {
                     val categories = document.toObject<CategoryObject>()
 
                     if (categories != null) {
-                        _arrayOfCategories.value = categories.listOfCategories?.toMutableSet()
+                        arrayOfCategories = categories.listOfCategories?.toMutableSet()!!
+                        generateRecyclerCategoriesItemList()
+                        Log.d("print", "DB accessed and categories loaded")
                     }
 
                     // Add new element to the document
-                    userDocumentRef.update("listOfCategories", FieldValue.arrayUnion("Unity"))
+                    // userDocumentRef.update("listOfCategories", FieldValue.arrayUnion("Unity"))
 
 
                 }else{
+                    val list = arrayListOf<String>()
+
+                    for(x in 0..500){
+                        list.add("Category $x")
+                    }
+
                     val listOfCategories =
-                        CategoryObject(
-                            listOf(
-                                "Unity",
-                                "OOP"
-                            )
-                        )
+                        CategoryObject(list)
                     Log.w("print", "SET")
                     userDocumentRef.set(listOfCategories)
                 }
@@ -57,6 +62,17 @@ class CategoriesViewModel : ViewModel() {
             .addOnFailureListener { exception ->
                 Log.w("print", "Error getting documents.", exception)
             }
+    }
+
+    private fun generateRecyclerCategoriesItemList() {
+        val listOfItems = ArrayList<CategoryItem>()
+
+        for(category in arrayOfCategories) {
+            val item = CategoryItem(category, 0)
+            listOfItems.add(item)
+        }
+
+        _listOfCategoryItem.value = listOfItems
     }
 
 
