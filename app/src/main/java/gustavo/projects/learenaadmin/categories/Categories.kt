@@ -1,6 +1,7 @@
 package gustavo.projects.learenaadmin.categories
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,10 +14,12 @@ import gustavo.projects.learenaadmin.R
 import gustavo.projects.learenaadmin.databinding.CategoriesFragmentBinding
 
 
-class Categories : Fragment() {
+class Categories : Fragment(), CategoryAdapter.OnItemClickListener {
 
     private lateinit var binding: CategoriesFragmentBinding
     private lateinit var viewModel: CategoriesViewModel
+
+    private var listOfRecyclerItem = ArrayList<CategoryItem>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,14 +32,19 @@ class Categories : Fragment() {
         viewModel = ViewModelProvider(this).get(CategoriesViewModel::class.java)
 
         viewModel.listOfCategoryItem.observe(viewLifecycleOwner, Observer<ArrayList<CategoryItem>> {
-            setRecyclerView(it)
+            listOfRecyclerItem = it
+            setRecyclerView()
         })
 
         return binding.root
     }
 
-    private fun setRecyclerView(listOfItem: ArrayList<CategoryItem>) {
-        binding.recyclerView.adapter = CategoryAdapter(listOfItem)
+    override fun onItemClick(position: Int) {
+        Log.d("print", "Navigate to the CategoryDetail fragment -> " + listOfRecyclerItem[position].categoryName)
+    }
+
+    private fun setRecyclerView() {
+        binding.recyclerView.adapter = CategoryAdapter(listOfRecyclerItem, this)
         binding.recyclerView.layoutManager = LinearLayoutManager(this.context)
         binding.recyclerView.setHasFixedSize(true)
     }

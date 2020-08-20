@@ -1,6 +1,5 @@
 package gustavo.projects.learenaadmin.categories
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import gustavo.projects.learenaadmin.R
 import kotlinx.android.synthetic.main.category_item.view.*
 
-class CategoryAdapter(private val categoryItemList: List<CategoryItem>) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
+class CategoryAdapter(
+    private val categoryItemList: List<CategoryItem>,
+    private val listener: OnItemClickListener
+)
+    : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.category_item, parent, false)
@@ -26,8 +29,24 @@ class CategoryAdapter(private val categoryItemList: List<CategoryItem>) : Recycl
 
     override fun getItemCount() = categoryItemList.size
 
-    class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val categoryName: TextView = itemView.categoryNameTextView
         val numOfQuestions: TextView = itemView.numOfQuestionTextView
+
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            val itemPosition = adapterPosition
+            if (itemPosition != RecyclerView.NO_POSITION) {
+                listener.onItemClick(itemPosition)
+            }
+        }
     }
+
+    interface OnItemClickListener {
+        fun onItemClick(position: Int)
+    }
+
 }
