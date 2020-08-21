@@ -1,8 +1,10 @@
 package gustavo.projects.learenaadmin.categories
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import gustavo.projects.learenaadmin.R
@@ -10,7 +12,8 @@ import kotlinx.android.synthetic.main.category_item.view.*
 
 class CategoryAdapter(
     private val categoryItemList: List<CategoryItem>,
-    private val listener: OnItemClickListener
+    private val itemListener: OnItemClickListener,
+    private val moreOptionListener: OnMoreOptionClickListener
 )
     : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
@@ -32,21 +35,30 @@ class CategoryAdapter(
     inner class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val categoryName: TextView = itemView.categoryNameTextView
         val numOfQuestions: TextView = itemView.numOfQuestionTextView
+        val itemMoreOption: ImageView = itemView.itemMoreOption
 
         init {
+            itemMoreOption.setOnClickListener(this)
             itemView.setOnClickListener(this)
         }
 
         override fun onClick(v: View?) {
             val itemPosition = adapterPosition
             if (itemPosition != RecyclerView.NO_POSITION) {
-                listener.onItemClick(itemPosition)
+                when(v) {
+                    itemView -> itemListener.onItemClick(itemPosition)
+                    itemMoreOption -> moreOptionListener.onMoreOptionClick(itemPosition, itemMoreOption)
+                }
             }
         }
     }
 
     interface OnItemClickListener {
         fun onItemClick(position: Int)
+    }
+
+    interface OnMoreOptionClickListener {
+        fun onMoreOptionClick(position: Int, icon: ImageView)
     }
 
 }
