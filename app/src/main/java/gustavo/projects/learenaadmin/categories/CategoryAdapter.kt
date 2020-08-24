@@ -47,7 +47,7 @@ class CategoryAdapter(
             if (itemPosition != RecyclerView.NO_POSITION) {
                 when(v) {
                     itemView -> itemListener.onItemClick(itemPosition)
-                    itemMoreOption -> moreOptionListener.onMoreOptionClick(itemPosition, itemMoreOption)
+                    itemMoreOption -> moreOptionListener.onMoreOptionClick(itemPosition, categoryName.text.toString(), itemMoreOption)
                 }
             }
         }
@@ -58,7 +58,7 @@ class CategoryAdapter(
     }
 
     interface OnMoreOptionClickListener {
-        fun onMoreOptionClick(position: Int, icon: ImageView)
+        fun onMoreOptionClick(position: Int, categoryName: String, icon: ImageView)
     }
 
 }

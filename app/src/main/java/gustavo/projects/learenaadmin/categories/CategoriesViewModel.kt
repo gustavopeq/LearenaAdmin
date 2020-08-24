@@ -6,6 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
@@ -15,7 +17,8 @@ class CategoriesViewModel : ViewModel() {
 
     private var auth: FirebaseAuth = Firebase.auth
 
-    val db = Firebase.firestore
+    private val db = Firebase.firestore
+    private lateinit var userDocumentRef: DocumentReference
 
     private var arrayOfCategories = mutableSetOf<String>()
 
@@ -23,13 +26,17 @@ class CategoriesViewModel : ViewModel() {
     val listOfCategoryItem: LiveData<ArrayList<CategoryItem>>
         get() = _listOfCategoryItem
 
+    private val _itemRemovedSuccessfully = MutableLiveData<Boolean>()
+    val itemRemovedSuccessfully: LiveData<Boolean>
+        get() = _itemRemovedSuccessfully
+
 
     init {
         getCategoriesFromDatabase()
     }
 
     private fun getCategoriesFromDatabase() {
-        val userDocumentRef = db.collection("Users").document(auth.currentUser?.uid.toString())
+        userDocumentRef = db.collection("Users").document(auth.currentUser?.uid.toString())
         userDocumentRef
             .get()
             .addOnSuccessListener { document ->
@@ -73,6 +80,27 @@ class CategoriesViewModel : ViewModel() {
         }
 
         _listOfCategoryItem.value = listOfItems
+    }
+
+    fun deleteCategoyFromDatabase(categoryName: String) {
+        userDocumentRef
+            .get()
+            .addOnSuccessListener { document ->
+                if (document.data!!.isNotEmpty()) {
+                    userDocumentRef.update("listOfCategories", FieldValue.arrayRemove(categoryName))
+                    Log.d("print", "The category $categoryName was removed!")
+                    _itemRemovedSuccessfully.value = true
+                }else{
+                    Log.d("print", "Document empty!")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w("print", "Error getting documents.", exception)
+            }
+    }
+
+    fun resetItemRemovedFlag() {
+        _itemRemovedSuccessfully.value = false
     }
 
 

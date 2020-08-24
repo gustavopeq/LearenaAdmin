@@ -23,6 +23,9 @@ class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdap
     private lateinit var viewModel: CategoriesViewModel
 
     private var listOfRecyclerItem = ArrayList<CategoryItem>()
+    private lateinit var adapter: CategoryAdapter
+    private var itemPositionToDelete = 0
+    private lateinit var caregoryNameToDelete: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +42,10 @@ class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdap
             setRecyclerView()
         })
 
+        viewModel.itemRemovedSuccessfully.observe(viewLifecycleOwner, Observer<Boolean>{itemRemovedSuccessfully ->
+            if(itemRemovedSuccessfully) deleteCategoryItemFromRecycleView()
+        })
+
         return binding.root
     }
 
@@ -46,17 +53,20 @@ class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdap
         Log.d("print", "Navigate to the CategoryDetail fragment -> " + listOfRecyclerItem[position].categoryName)
     }
 
-    override fun onMoreOptionClick(position: Int, icon: ImageView) {
-        showIconMoreOptionPopupMenu(icon)
+    override fun onMoreOptionClick(position: Int, categoryName: String, icon: ImageView) {
+        showMoreOptionPopupMenu(icon)
+        itemPositionToDelete = position
+        caregoryNameToDelete = categoryName
     }
 
     private fun setRecyclerView() {
-        binding.recyclerView.adapter = CategoryAdapter(listOfRecyclerItem, this, this)
+        adapter = CategoryAdapter(listOfRecyclerItem, this, this)
+        binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this.context)
         binding.recyclerView.setHasFixedSize(true)
     }
 
-    private fun showIconMoreOptionPopupMenu(view: View) {
+    private fun showMoreOptionPopupMenu(view: View) {
         val popupMenu = PopupMenu(this.context, view)
         popupMenu.setOnMenuItemClickListener(this)
         popupMenu.inflate(R.menu.popup_category_item_ellipsis)
@@ -64,6 +74,23 @@ class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdap
     }
 
     override fun onMenuItemClick(item: MenuItem?): Boolean {
+        if (item != null) {
+            when(item.itemId) {
+                R.id.deleteCategoryItem -> {
+                    deleteCategoryItemFromDatabase()
+                    return true
+                }
+            }
+        }
         return false
+    }
+
+    private fun deleteCategoryItemFromDatabase() {
+        viewModel.deleteCategoyFromDatabase(caregoryNameToDelete)
+    }
+
+    private fun deleteCategoryItemFromRecycleView() {
+        adapter.notifyItemRemoved(itemPositionToDelete)
+        viewModel.resetItemRemovedFlag()
     }
 }
