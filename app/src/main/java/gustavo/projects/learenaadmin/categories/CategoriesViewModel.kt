@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
@@ -45,7 +44,7 @@ class CategoriesViewModel : ViewModel() {
 
                     if (categories != null) {
                         arrayOfCategories = categories.listOfCategories?.toMutableSet()!!
-                        generateRecyclerCategoriesItemList()
+                        updateRecyclerCategoriesItemList()
                         Log.d("print", "DB accessed and categories loaded")
                     }
 
@@ -56,7 +55,7 @@ class CategoriesViewModel : ViewModel() {
                 }else{
                     val list = arrayListOf<String>()
 
-                    for(x in 0..500){
+                    for(x in 0..5000){
                         list.add("Category $x")
                     }
 
@@ -71,7 +70,7 @@ class CategoriesViewModel : ViewModel() {
             }
     }
 
-    private fun generateRecyclerCategoriesItemList() {
+    private fun updateRecyclerCategoriesItemList() {
         val listOfItems = ArrayList<CategoryItem>()
 
         for(category in arrayOfCategories) {
@@ -89,6 +88,8 @@ class CategoriesViewModel : ViewModel() {
                 if (document.data!!.isNotEmpty()) {
                     userDocumentRef.update("listOfCategories", FieldValue.arrayRemove(categoryName))
                     Log.d("print", "The category $categoryName was removed!")
+                    arrayOfCategories.remove(categoryName)
+                    updateRecyclerCategoriesItemList()
                     _itemRemovedSuccessfully.value = true
                 }else{
                     Log.d("print", "Document empty!")

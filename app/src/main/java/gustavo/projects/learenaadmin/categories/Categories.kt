@@ -25,7 +25,7 @@ class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdap
     private var listOfRecyclerItem = ArrayList<CategoryItem>()
     private lateinit var adapter: CategoryAdapter
     private var itemPositionToDelete = 0
-    private lateinit var caregoryNameToDelete: String
+    private lateinit var categoryNameToDelete: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,13 +37,16 @@ class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdap
 
         viewModel = ViewModelProvider(this).get(CategoriesViewModel::class.java)
 
-        viewModel.listOfCategoryItem.observe(viewLifecycleOwner, Observer<ArrayList<CategoryItem>> {
+
+        setRecyclerView()
+
+        viewModel.listOfCategoryItem.observe(viewLifecycleOwner, Observer {
             listOfRecyclerItem = it
-            setRecyclerView()
+            adapter.submitCategoryItemList(listOfRecyclerItem)
         })
 
-        viewModel.itemRemovedSuccessfully.observe(viewLifecycleOwner, Observer<Boolean>{itemRemovedSuccessfully ->
-            if(itemRemovedSuccessfully) deleteCategoryItemFromRecycleView()
+        viewModel.itemRemovedSuccessfully.observe(viewLifecycleOwner, Observer { itemRemovedSuccessfully ->
+            if(itemRemovedSuccessfully) resetItemRemovedFlag()
         })
 
         return binding.root
@@ -56,11 +59,11 @@ class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdap
     override fun onMoreOptionClick(position: Int, categoryName: String, icon: ImageView) {
         showMoreOptionPopupMenu(icon)
         itemPositionToDelete = position
-        caregoryNameToDelete = categoryName
+        categoryNameToDelete = categoryName
     }
 
     private fun setRecyclerView() {
-        adapter = CategoryAdapter(listOfRecyclerItem, this, this)
+        adapter = CategoryAdapter(this, this)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this.context)
         binding.recyclerView.setHasFixedSize(true)
@@ -77,7 +80,7 @@ class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdap
         if (item != null) {
             when(item.itemId) {
                 R.id.deleteCategoryItem -> {
-                    deleteCategoryItemFromDatabase()
+                    deleteCategoryItem()
                     return true
                 }
             }
@@ -85,12 +88,11 @@ class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdap
         return false
     }
 
-    private fun deleteCategoryItemFromDatabase() {
-        viewModel.deleteCategoyFromDatabase(caregoryNameToDelete)
+    private fun deleteCategoryItem() {
+        viewModel.deleteCategoyFromDatabase(categoryNameToDelete)
     }
 
-    private fun deleteCategoryItemFromRecycleView() {
-        adapter.notifyItemRemoved(itemPositionToDelete)
+    private fun resetItemRemovedFlag() {
         viewModel.resetItemRemovedFlag()
     }
 }
