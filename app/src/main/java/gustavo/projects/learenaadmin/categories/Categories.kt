@@ -12,6 +12,7 @@ import android.widget.PopupMenu
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import gustavo.projects.learenaadmin.R
 import gustavo.projects.learenaadmin.databinding.CategoriesFragmentBinding
@@ -48,6 +49,8 @@ class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdap
         viewModel.itemRemovedSuccessfully.observe(viewLifecycleOwner, Observer { itemRemovedSuccessfully ->
             if(itemRemovedSuccessfully) resetItemRemovedFlag()
         })
+
+        binding.newCategoryFab.setOnClickListener { findNavController().navigate(R.id.action_categories_to_newCategory) }
 
         return binding.root
     }

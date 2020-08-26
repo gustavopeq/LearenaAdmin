@@ -1,6 +1,5 @@
 package gustavo.projects.learenaadmin.signup
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,11 +10,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navGraphViewModels
 
 import gustavo.projects.learenaadmin.R
 import gustavo.projects.learenaadmin.databinding.SignupFragmentBinding
-import kotlinx.android.synthetic.main.activity_main.*
 
 class SignupFragment : Fragment() {
 

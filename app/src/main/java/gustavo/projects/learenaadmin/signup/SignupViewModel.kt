@@ -40,7 +40,7 @@ class SignupViewModel : ViewModel() {
             displayName = name
         }
 
-        user!!.updateProfile(profileUpdates)
+        user.updateProfile(profileUpdates)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Log.d("print", "User profile name updated")
@@ -53,7 +53,7 @@ class SignupViewModel : ViewModel() {
 
 
     private fun sendConfirmationEmail() {
-        user!!.sendEmailVerification()
+        user.sendEmailVerification()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Log.d("print", "Email sent.")

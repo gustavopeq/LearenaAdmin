@@ -64,8 +64,6 @@ class CategoryAdapter(
 
         holder.categoryName.text = currentItem.categoryName
         holder.numOfQuestions.text = currentItem.numOfQuestion.toString()
-
-        Log.d("print", "Recreating ${currentItem.categoryName} $position")
     }
 
     override fun getItemCount() = categoryItemList.size
