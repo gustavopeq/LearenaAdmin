@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import gustavo.projects.learenaadmin.R
 import gustavo.projects.learenaadmin.databinding.CategoriesFragmentBinding
 
@@ -38,8 +39,11 @@ class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdap
 
         viewModel = ViewModelProvider(this).get(CategoriesViewModel::class.java)
 
-
         setRecyclerView()
+
+        checkNewCategoryCreated(container)
+
+        viewModel.getCategoriesFromDatabase()
 
         viewModel.listOfCategoryItem.observe(viewLifecycleOwner, Observer {
             listOfRecyclerItem = it
@@ -53,6 +57,18 @@ class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdap
         binding.newCategoryFab.setOnClickListener { findNavController().navigate(R.id.action_categories_to_newCategory) }
 
         return binding.root
+    }
+
+    private fun checkNewCategoryCreated(container: ViewGroup?) {
+        val newCategoryName = CategoriesArgs.fromBundle(requireArguments()).newCategoryName
+
+        if (newCategoryName != null) {
+            Snackbar.make(container!!, "Category $newCategoryName created!", Snackbar.LENGTH_LONG)
+                .setAction("Undo") {
+                    viewModel.deleteCategoyFromDatabase(newCategoryName)
+                }.show()
+            arguments?.clear()
+        }
     }
 
     override fun onItemClick(position: Int) {

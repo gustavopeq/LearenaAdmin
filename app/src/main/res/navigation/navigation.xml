@@ -34,10 +34,19 @@
         <action
             android:id="@+id/action_categories_to_newCategory"
             app:destination="@id/newCategory" />
+        <argument
+            android:name="newCategoryName"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/newCategory"
         android:name="gustavo.projects.learenaadmin.categories.newCategory.NewCategory"
         android:label="new_category_fragment"
-        tools:layout="@layout/new_category_fragment" />
+        tools:layout="@layout/new_category_fragment" >
+        <action
+            android:id="@+id/action_newCategory_to_categories"
+            app:destination="@id/categories" />
+    </fragment>
 </navigation>

@@ -15,7 +15,6 @@ import com.google.firebase.ktx.Firebase
 class CategoriesViewModel : ViewModel() {
 
     private var auth: FirebaseAuth = Firebase.auth
-
     private val db = Firebase.firestore
     private lateinit var userDocumentRef: DocumentReference
 
@@ -29,12 +28,7 @@ class CategoriesViewModel : ViewModel() {
     val itemRemovedSuccessfully: LiveData<Boolean>
         get() = _itemRemovedSuccessfully
 
-
-    init {
-        getCategoriesFromDatabase()
-    }
-
-    private fun getCategoriesFromDatabase() {
+    fun getCategoriesFromDatabase() {
         userDocumentRef = db.collection("Users").document(auth.currentUser?.uid.toString())
         userDocumentRef
             .get()
@@ -47,26 +41,21 @@ class CategoriesViewModel : ViewModel() {
                         updateRecyclerCategoriesItemList()
                         Log.d("print", "DB accessed and categories loaded")
                     }
-
-                    // Add new element to the document
-                    // userDocumentRef.update("listOfCategories", FieldValue.arrayUnion("Unity"))
-
-
                 }else{
-                    val list = arrayListOf<String>()
-
-                    for(x in 0..5000){
-                        list.add("Category $x")
-                    }
-
-                    val listOfCategories =
-                        CategoryObject(list)
-                    Log.w("print", "SET")
-                    userDocumentRef.set(listOfCategories)
+//                    val list = arrayListOf<String>()
+//
+//                    for(x in 0..10){
+//                        list.add("Category $x")
+//                    }
+//
+//                    val listOfCategories =
+//                        CategoryObject(list)
+//                    Log.d("print", "SET")
+//                    userDocumentRef.set(listOfCategories)
                 }
             }
             .addOnFailureListener { exception ->
-                Log.w("print", "Error getting documents.", exception)
+                Log.d("print", "Error getting documents.", exception)
             }
     }
 
@@ -96,7 +85,7 @@ class CategoriesViewModel : ViewModel() {
                 }
             }
             .addOnFailureListener { exception ->
-                Log.w("print", "Error getting documents.", exception)
+                Log.d("print", "Error getting documents.", exception)
             }
     }
 

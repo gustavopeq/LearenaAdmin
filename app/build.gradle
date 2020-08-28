@@ -5,6 +5,9 @@ apply plugin: 'kotlin-android-extensions'
 // Google Firebase
 apply plugin: 'com.google.gms.google-services'
 
+// Navigation Safeargs
+apply plugin: 'androidx.navigation.safeargs'
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -50,8 +53,10 @@ dependencies {
 
     // Firebase Authentication
     implementation 'com.google.firebase:firebase-auth-ktx:19.3.2'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.2.2'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.2.2'
+
+    // Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:2.2.2"
+    implementation "androidx.navigation:navigation-ui-ktx:2.2.2"
 
     // Firestore Database
     implementation 'com.google.firebase:firebase-firestore-ktx:21.5.0'
