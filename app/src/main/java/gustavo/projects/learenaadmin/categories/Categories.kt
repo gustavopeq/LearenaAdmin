@@ -73,6 +73,7 @@ class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdap
 
     override fun onItemClick(position: Int) {
         Log.d("print", "Navigate to the CategoryDetail fragment -> " + listOfRecyclerItem[position].categoryName)
+        findNavController().navigate(R.id.action_categories_to_allQuestions)
     }
 
     override fun onMoreOptionClick(position: Int, categoryName: String, icon: ImageView) {
