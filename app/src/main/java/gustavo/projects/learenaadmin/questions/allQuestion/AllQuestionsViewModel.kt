@@ -1,19 +1,61 @@
 package gustavo.projects.learenaadmin.questions.allQuestion
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
 
 class AllQuestionsViewModel : ViewModel() {
 
+    private var auth: FirebaseAuth = Firebase.auth
+    private val db = Firebase.firestore
+    private lateinit var categoryDocumentRef: DocumentReference
+
+    private var categoryName: String = "OOP"
+
+    private var arrayOfQuestions = mutableMapOf<String, ArrayList<String>>()
+
     private val _listOfQuestionItem = MutableLiveData<ArrayList<QuestionItem>>()
-    val listOfCategoryItem: LiveData<ArrayList<QuestionItem>>
+    val listOfQuestionItem: LiveData<ArrayList<QuestionItem>>
         get() = _listOfQuestionItem
 
-    init {
-        var list = arrayListOf<QuestionItem>(QuestionItem("Question1"), QuestionItem("Question 2 dlsasladsk asdaskas,dl aslfasfaf sfklasfk"))
+    fun getQuestionsFromDatabase() {
+        categoryDocumentRef = db.collection("Users").document(auth.currentUser?.uid.toString()).collection(categoryName).document("QuestionDocument")
+        categoryDocumentRef
+            .get()
+            .addOnSuccessListener { document ->
+                if (document.data!!.isNotEmpty()) {
+                    val questions = document.toObject<QuestionObject>()
 
-        _listOfQuestionItem.value = list
+                    if (questions != null) {
+                        arrayOfQuestions = questions.mapOfQuestions?.toMutableMap()!!
+                        updateRecyclerQuestionsItemList()
+                        Log.d("print", "DB accessed and questions loaded")
+                    }
+                }else{
+                    Log.d("print", "This user haven't created any question yet")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d("print", "Error getting documents.", exception)
+            }
+    }
+
+    private fun updateRecyclerQuestionsItemList() {
+        val listOfItems = ArrayList<QuestionItem>()
+
+        for(question in arrayOfQuestions) {
+            val item = QuestionItem(question.key)
+            listOfItems.add(item)
+        }
+
+        _listOfQuestionItem.value = listOfItems
     }
 
 }

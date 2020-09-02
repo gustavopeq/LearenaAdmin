@@ -1,5 +1,6 @@
 package gustavo.projects.learenaadmin.questions.allQuestion
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import gustavo.projects.learenaadmin.R
 import kotlinx.android.synthetic.main.all_questions_item.view.*
-import java.util.zip.Inflater
 
 class AllQuestionsAdapter: RecyclerView.Adapter<AllQuestionsAdapter.AllQuestionsViewHolder>() {
 
@@ -17,7 +17,10 @@ class AllQuestionsAdapter: RecyclerView.Adapter<AllQuestionsAdapter.AllQuestions
     fun submitQuestionItemList(newList: List<QuestionItem>) {
         val oldList = questionItemList
         val diffResult: DiffUtil.DiffResult = DiffUtil.calculateDiff(
-            QuestionItemDiffCallback(oldList, newList)
+            QuestionItemDiffCallback(
+                oldList,
+                newList
+            )
         )
 
         questionItemList = newList
@@ -47,7 +50,6 @@ class AllQuestionsAdapter: RecyclerView.Adapter<AllQuestionsAdapter.AllQuestions
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AllQuestionsViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.all_questions_item, parent, false)
-
         return AllQuestionsViewHolder(itemView)
     }
 
@@ -60,7 +62,7 @@ class AllQuestionsAdapter: RecyclerView.Adapter<AllQuestionsAdapter.AllQuestions
     override fun getItemCount() = questionItemList.size
 
     inner class AllQuestionsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val questionName: TextView = itemView.questionName
+        val questionName: TextView = itemView.questionNameTextView
     }
 
 }

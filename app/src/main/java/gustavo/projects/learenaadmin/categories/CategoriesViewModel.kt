@@ -42,16 +42,7 @@ class CategoriesViewModel : ViewModel() {
                         Log.d("print", "DB accessed and categories loaded")
                     }
                 }else{
-//                    val list = arrayListOf<String>()
-//
-//                    for(x in 0..10){
-//                        list.add("Category $x")
-//                    }
-//
-//                    val listOfCategories =
-//                        CategoryObject(list)
-//                    Log.d("print", "SET")
-//                    userDocumentRef.set(listOfCategories)
+                    Log.d("print", "This user haven't created any category yet")
                 }
             }
             .addOnFailureListener { exception ->

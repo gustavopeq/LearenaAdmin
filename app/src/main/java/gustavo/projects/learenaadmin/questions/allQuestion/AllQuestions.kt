@@ -15,10 +15,12 @@ import gustavo.projects.learenaadmin.databinding.AllQuestionsFragmentBinding
 
 class AllQuestions : Fragment() {
 
-    private lateinit var viewModel: AllQuestionsViewModel
     private lateinit var binding: AllQuestionsFragmentBinding
+    private lateinit var viewModel: AllQuestionsViewModel
 
+    private var listOfRecyclerItem = ArrayList<QuestionItem>()
     private lateinit var adapter: AllQuestionsAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,8 +31,11 @@ class AllQuestions : Fragment() {
 
         setRecyclerView()
 
-        viewModel.listOfCategoryItem.observe(viewLifecycleOwner, Observer {
-            adapter.submitQuestionItemList(it)
+        viewModel.getQuestionsFromDatabase()
+
+        viewModel.listOfQuestionItem.observe(viewLifecycleOwner, Observer {
+            listOfRecyclerItem = it
+            adapter.submitQuestionItemList(listOfRecyclerItem)
         })
 
         return binding.root
@@ -38,9 +43,9 @@ class AllQuestions : Fragment() {
 
     private fun setRecyclerView() {
         adapter = AllQuestionsAdapter()
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(this.context)
-        binding.recyclerView.setHasFixedSize(true)
+        binding.questionsRecyclerView.adapter = adapter
+        binding.questionsRecyclerView.layoutManager = LinearLayoutManager(this.context)
+        binding.questionsRecyclerView.setHasFixedSize(true)
     }
 
 }

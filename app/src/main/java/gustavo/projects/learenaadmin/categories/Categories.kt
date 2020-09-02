@@ -24,7 +24,6 @@ class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdap
     private lateinit var binding: CategoriesFragmentBinding
     private lateinit var viewModel: CategoriesViewModel
 
-    private var listOfRecyclerItem = ArrayList<CategoryItem>()
     private lateinit var adapter: CategoryAdapter
     private var itemPositionToDelete = 0
     private lateinit var categoryNameToDelete: String
@@ -46,8 +45,7 @@ class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdap
         viewModel.getCategoriesFromDatabase()
 
         viewModel.listOfCategoryItem.observe(viewLifecycleOwner, Observer {
-            listOfRecyclerItem = it
-            adapter.submitCategoryItemList(listOfRecyclerItem)
+            adapter.submitCategoryItemList(it)
         })
 
         viewModel.itemRemovedSuccessfully.observe(viewLifecycleOwner, Observer { itemRemovedSuccessfully ->
@@ -72,7 +70,6 @@ class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdap
     }
 
     override fun onItemClick(position: Int) {
-        Log.d("print", "Navigate to the CategoryDetail fragment -> " + listOfRecyclerItem[position].categoryName)
         findNavController().navigate(R.id.action_categories_to_allQuestions)
     }
 
