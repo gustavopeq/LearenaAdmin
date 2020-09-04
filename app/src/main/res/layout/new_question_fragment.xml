@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="newQuestionViewModel"
+            type="gustavo.projects.learenaadmin.questions.newQuestion.NewQuestionViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ConstraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".questions.newQuestion.NewQuestion">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/newQuestionTextInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/defaultMargin"
+            android:hint="Enter question"
+            app:errorEnabled="true"
+            app:counterEnabled="true"
+            app:counterMaxLength="100"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textInputEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="100"
+                android:maxLines="3" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/answer1TextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/defaultMargin"
+            android:hint="Answer 1"
+            app:boxBackgroundColor="@color/mtrl_filled_background_color"
+            app:counterEnabled="true"
+            app:counterMaxLength="50"
+            app:errorEnabled="true"
+            app:errorIconDrawable="?android:attr/activatedBackgroundIndicator"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/newQuestionTextInput"
+            app:layout_constraintVertical_bias="0.0">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="50"
+                android:maxLines="2" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/answer2TextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/defaultMargin"
+            android:hint="Answer 2"
+            app:boxBackgroundColor="@color/mtrl_filled_background_color"
+            app:counterEnabled="true"
+            app:counterMaxLength="50"
+            app:errorEnabled="true"
+            app:errorIconDrawable="?android:attr/activatedBackgroundIndicator"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/answer1TextField"
+            app:layout_constraintVertical_bias="0.0">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="50"
+                android:maxLines="2" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/answer3TextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/defaultMargin"
+            android:hint="Answer 3 (Optional)"
+            app:boxBackgroundColor="@color/mtrl_filled_background_color"
+            app:counterEnabled="true"
+            app:counterMaxLength="50"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/answer2TextField"
+            app:layout_constraintVertical_bias="0.0">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="50"
+                android:maxLines="2" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/answer4TextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/defaultMargin"
+            android:hint="Answer 4 (Optional)"
+            app:boxBackgroundColor="@color/mtrl_filled_background_color"
+            app:counterEnabled="true"
+            app:counterMaxLength="50"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/answer3TextField"
+            app:layout_constraintVertical_bias="0.0">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="50"
+                android:maxLines="2" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/answer1Correct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="true"
+            app:layout_constraintEnd_toEndOf="@+id/answer1TextField"
+            app:layout_constraintTop_toTopOf="@+id/answer1TextField" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/answer2Correct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="false"
+            app:layout_constraintEnd_toEndOf="@+id/answer2TextField"
+            app:layout_constraintTop_toTopOf="@+id/answer2TextField"
+            tools:checked="false" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/answer3Correct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="false"
+            android:enabled="false"
+            app:layout_constraintEnd_toEndOf="@+id/answer3TextField"
+            app:layout_constraintTop_toTopOf="@+id/answer3TextField"
+            tools:checked="false" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/answer4Correct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="false"
+            android:enabled="false"
+            app:layout_constraintEnd_toEndOf="@+id/answer4TextField"
+            app:layout_constraintTop_toTopOf="@+id/answer4TextField"
+            tools:checked="false" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/createNewQuestionBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/answer4TextField"
+            app:layout_constraintVertical_bias="0.0"
+            android:layout_margin="@dimen/defaultMargin"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

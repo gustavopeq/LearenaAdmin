@@ -56,5 +56,18 @@
         android:id="@+id/allQuestions"
         android:name="gustavo.projects.learenaadmin.questions.allQuestion.AllQuestions"
         android:label="AllQuestions"
-        tools:layout="@layout/all_questions_fragment" />
+        tools:layout="@layout/all_questions_fragment" >
+        <action
+            android:id="@+id/action_allQuestions_to_newQuestion"
+            app:destination="@id/newQuestion" />
+    </fragment>
+    <fragment
+        android:id="@+id/newQuestion"
+        android:name="gustavo.projects.learenaadmin.questions.newQuestion.NewQuestion"
+        android:label="NewQuestion"
+        tools:layout="@layout/new_question_fragment">
+        <action
+            android:id="@+id/action_newQuestion_to_allQuestions"
+            app:destination="@id/allQuestions" />
+    </fragment>
 </navigation>

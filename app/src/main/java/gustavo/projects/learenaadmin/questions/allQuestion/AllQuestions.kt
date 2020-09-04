@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import gustavo.projects.learenaadmin.R
@@ -37,6 +38,8 @@ class AllQuestions : Fragment() {
             listOfRecyclerItem = it
             adapter.submitQuestionItemList(listOfRecyclerItem)
         })
+
+        binding.createNewQuestionFab.setOnClickListener { findNavController().navigate(R.id.action_allQuestions_to_newQuestion) }
 
         return binding.root
     }

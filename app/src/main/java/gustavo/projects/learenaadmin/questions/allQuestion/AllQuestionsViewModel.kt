@@ -19,7 +19,7 @@ class AllQuestionsViewModel : ViewModel() {
 
     private var categoryName: String = "OOP"
 
-    private var arrayOfQuestions = mutableMapOf<String, ArrayList<String>>()
+    private var mapOfQuestions = mutableMapOf<String, ArrayList<String>>()
 
     private val _listOfQuestionItem = MutableLiveData<ArrayList<QuestionItem>>()
     val listOfQuestionItem: LiveData<ArrayList<QuestionItem>>
@@ -34,7 +34,7 @@ class AllQuestionsViewModel : ViewModel() {
                     val questions = document.toObject<QuestionObject>()
 
                     if (questions != null) {
-                        arrayOfQuestions = questions.mapOfQuestions?.toMutableMap()!!
+                        mapOfQuestions = questions.mapOfQuestions?.toMutableMap()!!
                         updateRecyclerQuestionsItemList()
                         Log.d("print", "DB accessed and questions loaded")
                     }
@@ -50,7 +50,7 @@ class AllQuestionsViewModel : ViewModel() {
     private fun updateRecyclerQuestionsItemList() {
         val listOfItems = ArrayList<QuestionItem>()
 
-        for(question in arrayOfQuestions) {
+        for(question in mapOfQuestions) {
             val item = QuestionItem(question.key)
             listOfItems.add(item)
         }
