@@ -16,15 +16,48 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.textfield.TextInputLayout
 
 import gustavo.projects.learenaadmin.R
 import gustavo.projects.learenaadmin.databinding.NewQuestionFragmentBinding
+import kotlinx.android.synthetic.main.question_details_fragment.*
 
-class NewQuestion : Fragment() {
+class NewQuestion : Fragment(), IQuestionForm {
 
     private lateinit var viewModel: NewQuestionViewModel
     private lateinit var binding: NewQuestionFragmentBinding
-    private lateinit var listOfCorrectSwitches: ArrayList<SwitchCompat>
+
+    override var newQuestionTextInput: TextInputLayout
+        get() = binding.newQuestionTextInput
+        set(value) {}
+    override var answer1TextField: TextInputLayout
+        get() = binding.answer1TextField
+        set(value) {}
+    override var answer2TextField: TextInputLayout
+        get() = binding.answer2TextField
+        set(value) {}
+    override var answer3TextField: TextInputLayout
+        get() = binding.answer3TextField
+        set(value) {}
+    override var answer4TextField: TextInputLayout
+        get() = binding.answer4TextField
+        set(value) {}
+    override var answer1Correct: SwitchCompat
+        get() = binding.answer1Correct
+        set(value) {}
+    override var answer2Correct: SwitchCompat
+        get() = binding.answer2Correct
+        set(value) {}
+    override var answer3Correct: SwitchCompat
+        get() = binding.answer3Correct
+        set(value) {}
+    override var answer4Correct: SwitchCompat
+        get() = binding.answer4Correct
+        set(value) {}
+    override var listOfCorrectSwitches: ArrayList<SwitchCompat>
+        get() = createListOfCorrectSwitch()
+        set(value) {}
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,14 +66,13 @@ class NewQuestion : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.new_question_fragment, container, false)
         viewModel = ViewModelProvider(this).get(NewQuestionViewModel::class.java)
 
-        listOfCorrectSwitches = createListOfCorrectSwitch()
-
         correctSwitchesListeners()
-
         setTextChangedListener()
 
         binding.createNewQuestionBtn.setOnClickListener {
-            validateAllParametersToCreateNewQuestion()
+            if(validateAllParameters(this.requireActivity())) {
+                onCreateNewQuestion()
+            }
         }
 
         viewModel.questionCreatedSuccessfully.observe(viewLifecycleOwner, Observer {
@@ -50,184 +82,18 @@ class NewQuestion : Fragment() {
         return binding.root
     }
 
-    private fun validateAllParametersToCreateNewQuestion() {
-        var allTextInputSet = true
-        if (binding.newQuestionTextInput.editText?.text.isNullOrEmpty()) {
-            binding.newQuestionTextInput.error = "You have to enter the question"
-            allTextInputSet = false
+    private fun onCreateNewQuestion(){
+        val question = newQuestionTextInput.editText?.text.toString()
+        val answers = arrayListOf<String>()
+        answers.add(answer1TextField.editText?.text.toString())
+        answers.add(answer2TextField.editText?.text.toString())
+        if(!answer3TextField.editText?.text.isNullOrEmpty()) {
+            answers.add(answer3TextField.editText?.text.toString())
         }
-
-        if (binding.answer1TextField.editText?.text.isNullOrEmpty()) {
-            binding.answer1TextField.error = "You have to enter an answer"
-            allTextInputSet = false
+        if(!answer4TextField.editText?.text.isNullOrEmpty()) {
+            answers.add(answer4TextField.editText?.text.toString())
         }
-
-        if (binding.answer2TextField.editText?.text.isNullOrEmpty()) {
-            binding.answer2TextField.error = "You have to enter an answer"
-            allTextInputSet = false
-        }
-
-        if (allTextInputSet) {
-            var atLeastOneCorrectChecked = false
-            for (correctSwitch in listOfCorrectSwitches) {
-                if (correctSwitch.isChecked) {
-                    atLeastOneCorrectChecked = true
-                    break
-                }
-            }
-
-            if (!atLeastOneCorrectChecked) {
-                onCreateDialogMissingCorrectAnswer()
-            }else {
-                val question = binding.newQuestionTextInput.editText?.text.toString()
-                val answers = arrayListOf<String>()
-                answers.add(binding.answer1TextField.editText?.text.toString())
-                answers.add(binding.answer2TextField.editText?.text.toString())
-                if(!binding.answer3TextField.editText?.text.isNullOrEmpty()) {
-                    answers.add(binding.answer3TextField.editText?.text.toString())
-                }
-                if(!binding.answer4TextField.editText?.text.isNullOrEmpty()) {
-                    answers.add(binding.answer4TextField.editText?.text.toString())
-                }
-                viewModel.createMapOfQuestionAndAnswers(question, answers)
-            }
-
-        }
-    }
-
-    private fun onCreateDialogMissingCorrectAnswer() {
-        val builder = AlertDialog.Builder(this.activity)
-        builder.setMessage("You have to select one correct answer")
-        builder.setPositiveButton("OK") { dialog: DialogInterface?, which: Int ->
-            // Nothing to implement. Just close dialog
-        }
-
-        builder.show()
-    }
-
-    private fun setTextChangedListener() {
-
-        binding.newQuestionTextInput.editText?.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                // Nothing to implement
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Nothing to implement
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.newQuestionTextInput.error = null
-            }
-
-        })
-
-        binding.answer1TextField.editText?.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                // Nothing to implement
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Nothing to implement
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.answer1TextField.error = null
-            }
-
-        })
-
-        binding.answer2TextField.editText?.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                // Nothing to implement
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Nothing to implement
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.answer2TextField.error = null
-            }
-
-        })
-
-        binding.answer3TextField.editText?.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                // Nothing to implement
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Nothing to implement
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s.isNullOrBlank()) {
-                    binding.answer3Correct.isChecked = false
-                }
-                binding.answer3Correct.isEnabled = !s.isNullOrBlank()
-            }
-
-        })
-
-        binding.answer4TextField.editText?.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                // Nothing to implement
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Nothing to implement
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s.isNullOrBlank()) {
-                    binding.answer4Correct.isChecked = false
-                }
-                binding.answer4Correct.isEnabled = !s.isNullOrBlank()
-            }
-
-        })
-    }
-
-    private fun correctSwitchesListeners() {
-        binding.answer1Correct.setOnCheckedChangeListener { buttonView, isChecked ->
-            uncheckOthersCorrectSwitch(isChecked, listOfCorrectSwitches, buttonView)
-        }
-
-        binding.answer2Correct.setOnCheckedChangeListener { buttonView, isChecked ->
-            uncheckOthersCorrectSwitch(isChecked, listOfCorrectSwitches, buttonView)
-        }
-
-        binding.answer3Correct.setOnCheckedChangeListener { buttonView, isChecked ->
-            uncheckOthersCorrectSwitch(isChecked, listOfCorrectSwitches, buttonView)
-        }
-
-        binding.answer4Correct.setOnCheckedChangeListener { buttonView, isChecked ->
-            uncheckOthersCorrectSwitch(isChecked, listOfCorrectSwitches, buttonView)
-        }
-    }
-
-    private fun createListOfCorrectSwitch(): ArrayList<SwitchCompat> {
-        var listOfSwitch = arrayListOf<SwitchCompat>()
-        listOfSwitch.add(binding.answer1Correct)
-        listOfSwitch.add(binding.answer2Correct)
-        listOfSwitch.add(binding.answer3Correct)
-        listOfSwitch.add(binding.answer4Correct)
-        return listOfSwitch
-    }
-
-    private fun uncheckOthersCorrectSwitch(
-        isChecked: Boolean,
-        listOfSwitch: ArrayList<SwitchCompat>,
-        buttonView: CompoundButton?
-    ) {
-        if (isChecked) {
-            for (switch in listOfSwitch) {
-                if (switch != buttonView) {
-                    switch.isChecked = false
-                }
-            }
-        }
+        viewModel.createMapOfQuestionAndAnswers(question, answers)
     }
 
     private fun confirmNewQuestionCreated() {
@@ -235,5 +101,6 @@ class NewQuestion : Fragment() {
         Toast.makeText(context, "New question created", Toast.LENGTH_SHORT).show()
         findNavController().navigate(R.id.action_newQuestion_to_allQuestions)
     }
+
 
 }
