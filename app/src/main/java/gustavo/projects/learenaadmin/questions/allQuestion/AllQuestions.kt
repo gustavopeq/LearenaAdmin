@@ -29,7 +29,12 @@ class AllQuestions : Fragment(), CategoryAdapter.OnItemClickListener {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.all_questions_fragment, container, false)
-        viewModel = ViewModelProvider(this).get(AllQuestionsViewModel::class.java)
+
+        val categoryName = AllQuestionsArgs.fromBundle(requireArguments()).categoryName
+
+        val viewModelFactory = AllQuestionsViewModelFactory(categoryName)
+
+        viewModel = ViewModelProvider(this, viewModelFactory).get(AllQuestionsViewModel::class.java)
 
         setRecyclerView()
 

@@ -63,6 +63,8 @@
         <action
             android:id="@+id/action_allQuestions_to_questionDetails"
             app:destination="@id/questionDetails" />
+        <argument android:name="categoryName"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/newQuestion"

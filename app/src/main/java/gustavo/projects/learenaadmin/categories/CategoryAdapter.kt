@@ -67,6 +67,10 @@ class CategoryAdapter(
 
     override fun getItemCount() = categoryItemList.size
 
+    fun getItem(position: Int) : CategoryItem {
+        return categoryItemList[position]
+    }
+
     inner class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val categoryName: TextView = itemView.categoryNameTextView
         val numOfQuestions: TextView = itemView.numOfQuestionTextView

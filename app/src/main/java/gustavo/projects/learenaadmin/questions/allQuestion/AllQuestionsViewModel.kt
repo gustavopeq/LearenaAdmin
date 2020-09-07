@@ -11,13 +11,13 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 
-class AllQuestionsViewModel : ViewModel() {
+class AllQuestionsViewModel(categoryName: String) : ViewModel() {
 
     private var auth: FirebaseAuth = Firebase.auth
     private val db = Firebase.firestore
     private lateinit var categoryDocumentRef: DocumentReference
 
-    private var categoryName: String = "OOP"
+    private var categoryName: String = categoryName
 
     private var mapOfQuestions = mutableMapOf<String, ArrayList<String>>()
 

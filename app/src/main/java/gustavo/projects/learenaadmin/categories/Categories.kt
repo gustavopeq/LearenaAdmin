@@ -70,7 +70,7 @@ class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdap
     }
 
     override fun onItemClick(position: Int) {
-        findNavController().navigate(R.id.action_categories_to_allQuestions)
+        navigateToCategoryQuestions(adapter.getItem(position).categoryName)
     }
 
     override fun onMoreOptionClick(position: Int, categoryName: String, icon: ImageView) {
@@ -111,5 +111,9 @@ class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdap
 
     private fun resetItemRemovedFlag() {
         viewModel.resetItemRemovedFlag()
+    }
+
+    private fun navigateToCategoryQuestions(categoryName: String) {
+        findNavController().navigate(CategoriesDirections.actionCategoriesToAllQuestions(categoryName))
     }
 }
