@@ -1,15 +1,10 @@
 package gustavo.projects.learenaadmin.questions.newQuestion
 
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
 import androidx.databinding.DataBindingUtil
@@ -20,7 +15,6 @@ import com.google.android.material.textfield.TextInputLayout
 
 import gustavo.projects.learenaadmin.R
 import gustavo.projects.learenaadmin.databinding.NewQuestionFragmentBinding
-import kotlinx.android.synthetic.main.question_details_fragment.*
 
 class NewQuestion : Fragment(), IQuestionForm {
 
@@ -29,34 +23,34 @@ class NewQuestion : Fragment(), IQuestionForm {
 
     override var newQuestionTextInput: TextInputLayout
         get() = binding.newQuestionTextInput
-        set(value) {}
+        set(@Suppress("UNUSED_PARAMETER") value) {}
     override var answer1TextField: TextInputLayout
         get() = binding.answer1TextField
-        set(value) {}
+        set(@Suppress("UNUSED_PARAMETER") value) {}
     override var answer2TextField: TextInputLayout
         get() = binding.answer2TextField
-        set(value) {}
+        set(@Suppress("UNUSED_PARAMETER") value) {}
     override var answer3TextField: TextInputLayout
         get() = binding.answer3TextField
-        set(value) {}
+        set(@Suppress("UNUSED_PARAMETER") value) {}
     override var answer4TextField: TextInputLayout
         get() = binding.answer4TextField
-        set(value) {}
+        set(@Suppress("UNUSED_PARAMETER") value) {}
     override var answer1Correct: SwitchCompat
         get() = binding.answer1Correct
-        set(value) {}
+        set(@Suppress("UNUSED_PARAMETER") value) {}
     override var answer2Correct: SwitchCompat
         get() = binding.answer2Correct
-        set(value) {}
+        set(@Suppress("UNUSED_PARAMETER") value) {}
     override var answer3Correct: SwitchCompat
         get() = binding.answer3Correct
-        set(value) {}
+        set(@Suppress("UNUSED_PARAMETER") value) {}
     override var answer4Correct: SwitchCompat
         get() = binding.answer4Correct
-        set(value) {}
+        set(@Suppress("UNUSED_PARAMETER") value) {}
     override var listOfCorrectSwitches: ArrayList<SwitchCompat>
         get() = createListOfCorrectSwitch()
-        set(value) {}
+        set(@Suppress("UNUSED_PARAMETER") value) {}
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

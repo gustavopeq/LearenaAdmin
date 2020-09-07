@@ -60,7 +60,7 @@ interface IQuestionForm {
     private fun onCreateDialogMissingCorrectAnswer(activity: Activity) {
         val builder = AlertDialog.Builder(activity)
         builder.setMessage("You have to select one correct answer")
-        builder.setPositiveButton("OK") { dialog: DialogInterface?, which: Int ->
+        builder.setPositiveButton("OK") { _: DialogInterface?, _: Int ->
             // Nothing to implement. Just close dialog
         }
 

@@ -12,9 +12,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import gustavo.projects.learenaadmin.R
+import gustavo.projects.learenaadmin.categories.CategoryAdapter
 import gustavo.projects.learenaadmin.databinding.AllQuestionsFragmentBinding
 
-class AllQuestions : Fragment() {
+class AllQuestions : Fragment(), CategoryAdapter.OnItemClickListener {
 
     private lateinit var binding: AllQuestionsFragmentBinding
     private lateinit var viewModel: AllQuestionsViewModel
@@ -45,10 +46,14 @@ class AllQuestions : Fragment() {
     }
 
     private fun setRecyclerView() {
-        adapter = AllQuestionsAdapter()
+        adapter = AllQuestionsAdapter(this)
         binding.questionsRecyclerView.adapter = adapter
         binding.questionsRecyclerView.layoutManager = LinearLayoutManager(this.context)
         binding.questionsRecyclerView.setHasFixedSize(true)
+    }
+
+    override fun onItemClick(position: Int) {
+        findNavController().navigate(R.id.action_allQuestions_to_questionDetails)
     }
 
 }

@@ -60,6 +60,9 @@
         <action
             android:id="@+id/action_allQuestions_to_newQuestion"
             app:destination="@id/newQuestion" />
+        <action
+            android:id="@+id/action_allQuestions_to_questionDetails"
+            app:destination="@id/questionDetails" />
     </fragment>
     <fragment
         android:id="@+id/newQuestion"
@@ -70,4 +73,9 @@
             android:id="@+id/action_newQuestion_to_allQuestions"
             app:destination="@id/allQuestions" />
     </fragment>
+    <fragment
+        android:id="@+id/questionDetails"
+        android:name="gustavo.projects.learenaadmin.questions.questionDetails.QuestionDetails"
+        android:label="QuestionDetails"
+        tools:layout="@layout/question_details_fragment"/>
 </navigation>

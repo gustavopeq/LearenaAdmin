@@ -8,9 +8,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import gustavo.projects.learenaadmin.R
+import gustavo.projects.learenaadmin.categories.CategoryAdapter
 import kotlinx.android.synthetic.main.all_questions_item.view.*
 
-class AllQuestionsAdapter: RecyclerView.Adapter<AllQuestionsAdapter.AllQuestionsViewHolder>() {
+class AllQuestionsAdapter(private val itemListener: CategoryAdapter.OnItemClickListener): RecyclerView.Adapter<AllQuestionsAdapter.AllQuestionsViewHolder>() {
 
     private var questionItemList: List<QuestionItem> = arrayListOf()
 
@@ -61,8 +62,19 @@ class AllQuestionsAdapter: RecyclerView.Adapter<AllQuestionsAdapter.AllQuestions
 
     override fun getItemCount() = questionItemList.size
 
-    inner class AllQuestionsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class AllQuestionsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val questionName: TextView = itemView.questionNameTextView
+
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            val itemPosition = adapterPosition
+            if (itemPosition != RecyclerView.NO_POSITION) {
+                    itemListener.onItemClick(itemPosition)
+            }
+        }
     }
 
 }
