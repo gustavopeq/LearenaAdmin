@@ -30,17 +30,20 @@ class AllQuestionsViewModel(categoryName: String) : ViewModel() {
         categoryDocumentRef
             .get()
             .addOnSuccessListener { document ->
-                if (document.data!!.isNotEmpty()) {
-                    val questions = document.toObject<QuestionObject>()
+                if(document.exists()) {
+                    if (document.data!!.isNotEmpty()) {
+                        val questions = document.toObject<QuestionObject>()
 
-                    if (questions != null) {
-                        mapOfQuestions = questions.mapOfQuestions?.toMutableMap()!!
-                        updateRecyclerQuestionsItemList()
-                        Log.d("print", "DB accessed and questions loaded")
+                        if (questions != null) {
+                            mapOfQuestions = questions.mapOfQuestions?.toMutableMap()!!
+                            updateRecyclerQuestionsItemList()
+                            Log.d("print", "DB accessed and questions loaded")
+                        }
+                    } else {
+                        Log.d("print", "This user haven't created any question yet")
                     }
-                }else{
-                    Log.d("print", "This user haven't created any question yet")
                 }
+                Log.d("print", "This user haven't created any question yet")
             }
             .addOnFailureListener { exception ->
                 Log.d("print", "Error getting documents.", exception)

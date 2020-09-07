@@ -13,13 +13,13 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import gustavo.projects.learenaadmin.questions.allQuestion.QuestionObject
 
-class NewQuestionViewModel : ViewModel() {
+class NewQuestionViewModel(categoryName: String) : ViewModel() {
 
     private var auth: FirebaseAuth = Firebase.auth
     private val db = Firebase.firestore
     private lateinit var categoryDocumentRef: DocumentReference
 
-    private val categoryName = "OOP"
+    private val categoryName = categoryName
 
     private val _questionCreatedSuccessfully = MutableLiveData<Boolean>()
     val questionCreatedSuccessfully: LiveData<Boolean>

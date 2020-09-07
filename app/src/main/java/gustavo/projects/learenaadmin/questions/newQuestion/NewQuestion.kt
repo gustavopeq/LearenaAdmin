@@ -15,11 +15,13 @@ import com.google.android.material.textfield.TextInputLayout
 
 import gustavo.projects.learenaadmin.R
 import gustavo.projects.learenaadmin.databinding.NewQuestionFragmentBinding
+import io.grpc.NameResolver
 
 class NewQuestion : Fragment(), IQuestionForm {
 
     private lateinit var viewModel: NewQuestionViewModel
     private lateinit var binding: NewQuestionFragmentBinding
+    private lateinit var categoryName: String
 
     override var newQuestionTextInput: TextInputLayout
         get() = binding.newQuestionTextInput
@@ -58,7 +60,12 @@ class NewQuestion : Fragment(), IQuestionForm {
     ): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.new_question_fragment, container, false)
-        viewModel = ViewModelProvider(this).get(NewQuestionViewModel::class.java)
+
+        categoryName = NewQuestionArgs.fromBundle(requireArguments()).categoryName
+
+        val viewModelFactory = NewQuestionViewModelFactory(categoryName)
+
+        viewModel = ViewModelProvider(this, viewModelFactory).get(NewQuestionViewModel::class.java)
 
         correctSwitchesListeners()
         setTextChangedListener()
@@ -93,7 +100,7 @@ class NewQuestion : Fragment(), IQuestionForm {
     private fun confirmNewQuestionCreated() {
         viewModel.resetQuestionCreatedSuccessfully()
         Toast.makeText(context, "New question created", Toast.LENGTH_SHORT).show()
-        findNavController().navigate(R.id.action_newQuestion_to_allQuestions)
+        findNavController().navigate(NewQuestionDirections.actionNewQuestionToAllQuestions(categoryName))
     }
 
 

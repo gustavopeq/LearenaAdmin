@@ -23,6 +23,7 @@ class AllQuestions : Fragment(), CategoryAdapter.OnItemClickListener {
     private var listOfRecyclerItem = ArrayList<QuestionItem>()
     private lateinit var adapter: AllQuestionsAdapter
 
+    private lateinit var categoryName: String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,7 +31,7 @@ class AllQuestions : Fragment(), CategoryAdapter.OnItemClickListener {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.all_questions_fragment, container, false)
 
-        val categoryName = AllQuestionsArgs.fromBundle(requireArguments()).categoryName
+        categoryName = AllQuestionsArgs.fromBundle(requireArguments()).categoryName
 
         val viewModelFactory = AllQuestionsViewModelFactory(categoryName)
 
@@ -45,7 +46,7 @@ class AllQuestions : Fragment(), CategoryAdapter.OnItemClickListener {
             adapter.submitQuestionItemList(listOfRecyclerItem)
         })
 
-        binding.createNewQuestionFab.setOnClickListener { findNavController().navigate(R.id.action_allQuestions_to_newQuestion) }
+        binding.createNewQuestionFab.setOnClickListener { navigateToNewQuestion() }
 
         return binding.root
     }
@@ -59,6 +60,10 @@ class AllQuestions : Fragment(), CategoryAdapter.OnItemClickListener {
 
     override fun onItemClick(position: Int) {
         findNavController().navigate(R.id.action_allQuestions_to_questionDetails)
+    }
+
+    private fun navigateToNewQuestion() {
+        findNavController().navigate(AllQuestionsDirections.actionAllQuestionsToNewQuestion(categoryName))
     }
 
 }
