@@ -62,6 +62,10 @@ class AllQuestionsAdapter(private val itemListener: CategoryAdapter.OnItemClickL
 
     override fun getItemCount() = questionItemList.size
 
+    fun getItem(position: Int) : String {
+        return questionItemList[position].questionName
+    }
+
     inner class AllQuestionsViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         val questionName: TextView = itemView.questionNameTextView
 

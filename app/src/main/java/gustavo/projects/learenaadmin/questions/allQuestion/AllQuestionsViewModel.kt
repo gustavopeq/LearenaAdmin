@@ -11,13 +11,11 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 
-class AllQuestionsViewModel(categoryName: String) : ViewModel() {
+class AllQuestionsViewModel(private var categoryName: String) : ViewModel() {
 
     private var auth: FirebaseAuth = Firebase.auth
     private val db = Firebase.firestore
     private lateinit var categoryDocumentRef: DocumentReference
-
-    private var categoryName: String = categoryName
 
     private var mapOfQuestions = mutableMapOf<String, ArrayList<String>>()
 
@@ -42,8 +40,9 @@ class AllQuestionsViewModel(categoryName: String) : ViewModel() {
                     } else {
                         Log.d("print", "This user haven't created any question yet")
                     }
+                } else {
+                    Log.d("print", "This user haven't created any question yet")
                 }
-                Log.d("print", "This user haven't created any question yet")
             }
             .addOnFailureListener { exception ->
                 Log.d("print", "Error getting documents.", exception)

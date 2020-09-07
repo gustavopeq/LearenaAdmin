@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SwitchCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputLayout
 
@@ -19,6 +20,7 @@ class QuestionDetails : Fragment(), IQuestionForm {
 
     private lateinit var viewModel: QuestionDetailsViewModel
     private lateinit var binding: QuestionDetailsFragmentBinding
+    private lateinit var categoryName: String
 
     override var newQuestionTextInput: TextInputLayout
         get() = binding.newQuestionTextInput
@@ -50,6 +52,9 @@ class QuestionDetails : Fragment(), IQuestionForm {
     override var listOfCorrectSwitches: ArrayList<SwitchCompat>
         get() = createListOfCorrectSwitch()
         set(@Suppress("UNUSED_PARAMETER") value) {}
+    override var listOfAnswerTextField: ArrayList<TextInputLayout>
+        get() = createListOfAnswerTextField()
+        set(@Suppress("UNUSED_PARAMETER") value) {}
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,7 +62,13 @@ class QuestionDetails : Fragment(), IQuestionForm {
     ): View? {
 
         binding = DataBindingUtil.inflate(inflater, R.layout.question_details_fragment, container, false)
-        viewModel = ViewModelProvider(this).get(QuestionDetailsViewModel::class.java)
+
+        categoryName = QuestionDetailsArgs.fromBundle(requireArguments()).categoryName
+        val questionName = QuestionDetailsArgs.fromBundle(requireArguments()).questionName
+
+        val viewModelFactory = QuestionDetailsViewModelFactory(categoryName, questionName)
+
+        viewModel = ViewModelProvider(this, viewModelFactory).get(QuestionDetailsViewModel::class.java)
 
         correctSwitchesListeners()
         setTextChangedListener()
@@ -67,6 +78,15 @@ class QuestionDetails : Fragment(), IQuestionForm {
 
             }
         }
+
+        newQuestionTextInput.editText?.setText(questionName)
+
+        viewModel.listOfAnswers.observe(viewLifecycleOwner, Observer { listOfAnswers ->
+            for((index, answer) in listOfAnswers.withIndex()) {
+                listOfAnswerTextField[index].editText?.setText(answer)
+                if(!listOfAnswerTextField[index].isEnabled) listOfAnswerTextField[index].isEnabled = true
+            }
+        })
 
         return binding.root
     }

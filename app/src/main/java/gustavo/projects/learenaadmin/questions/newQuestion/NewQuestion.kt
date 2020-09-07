@@ -53,6 +53,9 @@ class NewQuestion : Fragment(), IQuestionForm {
     override var listOfCorrectSwitches: ArrayList<SwitchCompat>
         get() = createListOfCorrectSwitch()
         set(@Suppress("UNUSED_PARAMETER") value) {}
+    override var listOfAnswerTextField: ArrayList<TextInputLayout>
+        get() = createListOfAnswerTextField()
+        set(@Suppress("UNUSED_PARAMETER") value) {}
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

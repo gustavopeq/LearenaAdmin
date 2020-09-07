@@ -59,7 +59,13 @@ class AllQuestions : Fragment(), CategoryAdapter.OnItemClickListener {
     }
 
     override fun onItemClick(position: Int) {
-        findNavController().navigate(R.id.action_allQuestions_to_questionDetails)
+        navigateToQuestionDetail(position)
+    }
+
+    private fun navigateToQuestionDetail(position: Int) {
+        val questionName = adapter.getItem(position)
+
+        findNavController().navigate(AllQuestionsDirections.actionAllQuestionsToQuestionDetails(categoryName, questionName))
     }
 
     private fun navigateToNewQuestion() {

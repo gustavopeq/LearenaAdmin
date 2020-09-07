@@ -21,6 +21,7 @@ interface IQuestionForm {
     var answer3Correct: SwitchCompat
     var answer4Correct: SwitchCompat
     var listOfCorrectSwitches: ArrayList<SwitchCompat>
+    var listOfAnswerTextField: ArrayList<TextInputLayout>
 
     fun validateAllParameters(activity: Activity) : Boolean {
         var allTextInputSet = true
@@ -74,6 +75,15 @@ interface IQuestionForm {
         listOfSwitch.add(answer3Correct)
         listOfSwitch.add(answer4Correct)
         return listOfSwitch
+    }
+
+    fun createListOfAnswerTextField(): ArrayList<TextInputLayout> {
+        var listOfAnswerTextField = arrayListOf<TextInputLayout>()
+        listOfAnswerTextField.add(answer1TextField)
+        listOfAnswerTextField.add(answer2TextField)
+        listOfAnswerTextField.add(answer3TextField)
+        listOfAnswerTextField.add(answer4TextField)
+        return listOfAnswerTextField
     }
 
     fun setTextChangedListener() {

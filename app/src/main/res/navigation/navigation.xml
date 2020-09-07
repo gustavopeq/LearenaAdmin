@@ -82,5 +82,12 @@
         android:id="@+id/questionDetails"
         android:name="gustavo.projects.learenaadmin.questions.questionDetails.QuestionDetails"
         android:label="QuestionDetails"
-        tools:layout="@layout/question_details_fragment"/>
+        tools:layout="@layout/question_details_fragment">
+        <argument
+            android:name="categoryName"
+            app:argType="string" />
+        <argument
+            android:name="questionName"
+            app:argType="string" />
+    </fragment>
 </navigation>
