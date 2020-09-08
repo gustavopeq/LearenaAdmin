@@ -60,6 +60,7 @@ class QuestionDetailsViewModel(private val categoryName: String, private var que
         _listOfAnswers.value = mapOfQuestions[questionName]
     }
 
+    // IF QUESTION NAME IS CHANGED, THE OLD ONE IS DELETED AND A NEW ONE IS CREATED. IF ONLY THE ANSWERS WAS CHANGED, THEN THE MAP IS UPDATED WITH THE NEW ANSWERS
     private fun updateQuestionInDatabase(newQuestionObject: QuestionObject) {
         var newQuestionName = ""
         for(key in newQuestionObject.mapOfQuestions!!.keys) {
