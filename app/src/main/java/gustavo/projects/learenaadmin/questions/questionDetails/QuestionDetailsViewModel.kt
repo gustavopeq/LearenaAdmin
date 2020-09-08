@@ -7,12 +7,14 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import gustavo.projects.learenaadmin.questions.allQuestion.QuestionObject
 
-class QuestionDetailsViewModel(private val categoryName: String, private val questionName: String) : ViewModel() {
+class QuestionDetailsViewModel(private val categoryName: String, private var questionName: String) : ViewModel() {
 
     private var auth: FirebaseAuth = Firebase.auth
     private val db = Firebase.firestore
@@ -56,6 +58,36 @@ class QuestionDetailsViewModel(private val categoryName: String, private val que
 
     private fun getQuestionsDetails() {
         _listOfAnswers.value = mapOfQuestions[questionName]
+    }
+
+    private fun updateQuestionInDatabase(newQuestionObject: QuestionObject) {
+        var newQuestionName = ""
+        for(key in newQuestionObject.mapOfQuestions!!.keys) {
+            newQuestionName = key
+        }
+
+        categoryDocumentRef = db.collection("Users").document(auth.currentUser?.uid.toString()).collection(categoryName).document("QuestionDocument")
+        categoryDocumentRef
+            .get()
+            .addOnSuccessListener {
+                if(questionName != newQuestionName){
+                    categoryDocumentRef.update("mapOfQuestions.$questionName", FieldValue.delete())
+                    questionName = newQuestionName
+                }
+                categoryDocumentRef.set(newQuestionObject, SetOptions.merge())
+            }
+            .addOnFailureListener { exception ->
+                Log.d("print", "Error getting documents.", exception)
+            }
+    }
+
+    fun updateMapOfQuestion(question: String, answers: ArrayList<String>) {
+        val mapOfQuestionAndAnswer = mutableMapOf<String, ArrayList<String>>()
+        mapOfQuestionAndAnswer[question] = answers
+
+        val newQuestionObject = QuestionObject(mapOfQuestionAndAnswer)
+
+        updateQuestionInDatabase(newQuestionObject)
     }
 
 }
