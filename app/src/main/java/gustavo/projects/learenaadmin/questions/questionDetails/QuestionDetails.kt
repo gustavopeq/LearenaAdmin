@@ -17,7 +17,6 @@ import com.google.android.material.textfield.TextInputLayout
 import gustavo.projects.learenaadmin.R
 import gustavo.projects.learenaadmin.databinding.QuestionDetailsFragmentBinding
 import gustavo.projects.learenaadmin.questions.newQuestion.IQuestionForm
-import gustavo.projects.learenaadmin.questions.newQuestion.NewQuestionDirections
 
 class QuestionDetails : Fragment(), IQuestionForm {
 
@@ -76,25 +75,33 @@ class QuestionDetails : Fragment(), IQuestionForm {
         correctSwitchesListeners()
         setTextChangedListener()
 
-        binding.saveBtn.setOnClickListener {
-            if(validateAllParameters(this.requireActivity())) {
-                onCreateNewQuestion()
-            }
-        }
-
         newQuestionTextInput.editText?.setText(questionName)
 
         viewModel.listOfAnswers.observe(viewLifecycleOwner, Observer { listOfAnswers ->
-            for((index, answer) in listOfAnswers.withIndex()) {
-                listOfAnswerTextField[index].editText?.setText(answer)
-                if(!listOfAnswerTextField[index].isEnabled) listOfAnswerTextField[index].isEnabled = true
+            fillAnswerTextFields(listOfAnswers)
+        })
+
+        binding.saveBtn.setOnClickListener {
+            if(validateAllParameters(this.requireActivity())) {
+                onUpdateQuestion()
             }
+        }
+
+        viewModel.onQuestionUpdatedSuccessfully.observe(viewLifecycleOwner, Observer {
+            if(it) confirmQuestionUpdated()
         })
 
         return binding.root
     }
 
-    private fun onCreateNewQuestion(){
+    private fun fillAnswerTextFields(listOfAnswers: ArrayList<String>) {
+        for ((index, answer) in listOfAnswers.withIndex()) {
+            listOfAnswerTextField[index].editText?.setText(answer)
+            if (!listOfAnswerTextField[index].isEnabled) listOfAnswerTextField[index].isEnabled = true
+        }
+    }
+
+    private fun onUpdateQuestion(){
         val question = newQuestionTextInput.editText?.text.toString()
         val answers = arrayListOf<String>()
         answers.add(answer1TextField.editText?.text.toString())
@@ -105,11 +112,31 @@ class QuestionDetails : Fragment(), IQuestionForm {
         if(!answer4TextField.editText?.text.isNullOrEmpty()) {
             answers.add(answer4TextField.editText?.text.toString())
         }
+
+        setCorrectAnswerAsFirst(answers)
+
         viewModel.updateMapOfQuestion(question, answers)
     }
 
+    // TAKE THE ANSWERS ARRAY, AND PUT THE CORRECT ANSWER IN THE FIRST POSITION
+    private fun setCorrectAnswerAsFirst(answers: ArrayList<String>) : ArrayList<String> {
+        if(listOfCorrectSwitches[0].isChecked) return answers
+
+        for((index, answer) in answers.withIndex()) {
+            if(listOfCorrectSwitches[index].isChecked) {
+                answers[index] = answers[0]
+                answers[0] = answer
+                return answers
+            }
+        }
+
+        return answers
+    }
+
     private fun confirmQuestionUpdated() {
+        viewModel.resetQuestionUpdatedSuccessfully()
         Toast.makeText(context, "Question Updated", Toast.LENGTH_SHORT).show()
+        findNavController().navigate(QuestionDetailsDirections.actionQuestionDetailsToAllQuestions(categoryName))
     }
 
 }

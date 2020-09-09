@@ -26,6 +26,10 @@ class QuestionDetailsViewModel(private val categoryName: String, private var que
     val listOfAnswers: LiveData<ArrayList<String>>
         get() = _listOfAnswers
 
+    private val _onQuestionUpdatedSuccessfully = MutableLiveData<Boolean>()
+    val onQuestionUpdatedSuccessfully: LiveData<Boolean>
+        get() = _onQuestionUpdatedSuccessfully
+
     init {
         getQuestionsFromDatabase()
     }
@@ -76,6 +80,8 @@ class QuestionDetailsViewModel(private val categoryName: String, private var que
                     questionName = newQuestionName
                 }
                 categoryDocumentRef.set(newQuestionObject, SetOptions.merge())
+                _onQuestionUpdatedSuccessfully.value = true
+                Log.d("print", "Question updated!")
             }
             .addOnFailureListener { exception ->
                 Log.d("print", "Error getting documents.", exception)
@@ -89,6 +95,10 @@ class QuestionDetailsViewModel(private val categoryName: String, private var que
         val newQuestionObject = QuestionObject(mapOfQuestionAndAnswer)
 
         updateQuestionInDatabase(newQuestionObject)
+    }
+
+    fun resetQuestionUpdatedSuccessfully() {
+        _onQuestionUpdatedSuccessfully.value = false
     }
 
 }

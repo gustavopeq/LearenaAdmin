@@ -15,7 +15,6 @@ import com.google.android.material.textfield.TextInputLayout
 
 import gustavo.projects.learenaadmin.R
 import gustavo.projects.learenaadmin.databinding.NewQuestionFragmentBinding
-import io.grpc.NameResolver
 
 class NewQuestion : Fragment(), IQuestionForm {
 
@@ -97,7 +96,25 @@ class NewQuestion : Fragment(), IQuestionForm {
         if(!answer4TextField.editText?.text.isNullOrEmpty()) {
             answers.add(answer4TextField.editText?.text.toString())
         }
+
+        setCorrectAnswerAsFirst(answers)
+
         viewModel.createMapOfQuestionAndAnswers(question, answers)
+    }
+
+    // TAKE THE ANSWERS ARRAY, AND PUT THE CORRECT ANSWER IN THE FIRST POSITION
+    private fun setCorrectAnswerAsFirst(answers: ArrayList<String>) : ArrayList<String> {
+        if(listOfCorrectSwitches[0].isChecked) return answers
+
+        for((index, answer) in answers.withIndex()) {
+            if(listOfCorrectSwitches[index].isChecked) {
+                answers[index] = answers[0]
+                answers[0] = answer
+                return answers
+            }
+        }
+
+        return answers
     }
 
     private fun confirmNewQuestionCreated() {

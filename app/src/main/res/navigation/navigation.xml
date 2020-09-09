@@ -89,5 +89,8 @@
         <argument
             android:name="questionName"
             app:argType="string" />
+        <action
+            android:id="@+id/action_questionDetails_to_allQuestions"
+            app:destination="@id/allQuestions" />
     </fragment>
 </navigation>
