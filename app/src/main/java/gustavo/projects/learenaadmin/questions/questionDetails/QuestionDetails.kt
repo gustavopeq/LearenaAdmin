@@ -1,24 +1,29 @@
 package gustavo.projects.learenaadmin.questions.questionDetails
 
 
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
+import gustavo.projects.learenaadmin.BasicDialogWindow
 
 import gustavo.projects.learenaadmin.R
 import gustavo.projects.learenaadmin.databinding.QuestionDetailsFragmentBinding
 import gustavo.projects.learenaadmin.questions.newQuestion.IQuestionForm
 
-class QuestionDetails : Fragment(), IQuestionForm {
+class QuestionDetails : Fragment(), IQuestionForm, BasicDialogWindow {
 
     private lateinit var viewModel: QuestionDetailsViewModel
     private lateinit var binding: QuestionDetailsFragmentBinding
@@ -62,7 +67,6 @@ class QuestionDetails : Fragment(), IQuestionForm {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         binding = DataBindingUtil.inflate(inflater, R.layout.question_details_fragment, container, false)
 
         categoryName = QuestionDetailsArgs.fromBundle(requireArguments()).categoryName
@@ -91,7 +95,36 @@ class QuestionDetails : Fragment(), IQuestionForm {
             if(it) confirmQuestionUpdated()
         })
 
+        viewModel.onQuestionDeletedSuccessfully.observe(viewLifecycleOwner, Observer {
+            if(it) confirmQuestionDeleted()
+        })
+
+        setHasOptionsMenu(true)
+
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+
+        inflater.inflate(R.menu.delete_question,menu)
+
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.deleteQuestionIcon -> onCreateDialog(requireActivity(),"Are you sure you want to delete this question?", "Delete", "Cancel")
+            android.R.id.home -> onBackArrowClick()
+        }
+        return true
+    }
+
+    override fun onDialogPositiveBtn() {
+       viewModel.deleteQuestionFromDatabase()
+    }
+
+    override fun onDialogNegativeBtn() {
+        // Nothing to implement, just close dialog window
     }
 
     private fun fillAnswerTextFields(listOfAnswers: ArrayList<String>) {
@@ -136,6 +169,16 @@ class QuestionDetails : Fragment(), IQuestionForm {
     private fun confirmQuestionUpdated() {
         viewModel.resetQuestionUpdatedSuccessfully()
         Toast.makeText(context, "Question Updated", Toast.LENGTH_SHORT).show()
+        findNavController().navigate(QuestionDetailsDirections.actionQuestionDetailsToAllQuestions(categoryName))
+    }
+
+    private fun confirmQuestionDeleted() {
+        viewModel.resetQuestionDeletedSuccessfully()
+        Toast.makeText(context, "Question Deleted", Toast.LENGTH_SHORT).show()
+        findNavController().navigate(QuestionDetailsDirections.actionQuestionDetailsToAllQuestions(categoryName))
+    }
+
+    private fun onBackArrowClick() {
         findNavController().navigate(QuestionDetailsDirections.actionQuestionDetailsToAllQuestions(categoryName))
     }
 

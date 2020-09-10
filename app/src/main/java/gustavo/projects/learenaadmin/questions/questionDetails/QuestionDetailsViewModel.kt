@@ -30,6 +30,10 @@ class QuestionDetailsViewModel(private val categoryName: String, private var que
     val onQuestionUpdatedSuccessfully: LiveData<Boolean>
         get() = _onQuestionUpdatedSuccessfully
 
+    private val _onQuestionDeletedSuccessfully = MutableLiveData<Boolean>()
+    val onQuestionDeletedSuccessfully: LiveData<Boolean>
+        get() = _onQuestionDeletedSuccessfully
+
     init {
         getQuestionsFromDatabase()
     }
@@ -71,7 +75,6 @@ class QuestionDetailsViewModel(private val categoryName: String, private var que
             newQuestionName = key
         }
 
-        categoryDocumentRef = db.collection("Users").document(auth.currentUser?.uid.toString()).collection(categoryName).document("QuestionDocument")
         categoryDocumentRef
             .get()
             .addOnSuccessListener {
@@ -99,6 +102,23 @@ class QuestionDetailsViewModel(private val categoryName: String, private var que
 
     fun resetQuestionUpdatedSuccessfully() {
         _onQuestionUpdatedSuccessfully.value = false
+    }
+
+    fun deleteQuestionFromDatabase() {
+        categoryDocumentRef
+            .get()
+            .addOnSuccessListener {
+                categoryDocumentRef.update("mapOfQuestions.$questionName", FieldValue.delete())
+                Log.d("print", "Question deleted from database!")
+                _onQuestionDeletedSuccessfully.value = true
+            }
+            .addOnFailureListener { exception ->
+                Log.d("print", "Error getting documents.", exception)
+            }
+    }
+
+    fun resetQuestionDeletedSuccessfully() {
+        _onQuestionDeletedSuccessfully.value = false
     }
 
 }

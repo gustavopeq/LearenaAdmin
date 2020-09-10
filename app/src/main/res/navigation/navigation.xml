@@ -46,8 +46,8 @@
     <fragment
         android:id="@+id/newCategory"
         android:name="gustavo.projects.learenaadmin.categories.newCategory.NewCategory"
-        android:label="new_category_fragment"
-        tools:layout="@layout/new_category_fragment" >
+        android:label="Create new category"
+        tools:layout="@layout/new_category_fragment">
         <action
             android:id="@+id/action_newCategory_to_categories"
             app:destination="@id/categories" />
@@ -55,21 +55,22 @@
     <fragment
         android:id="@+id/allQuestions"
         android:name="gustavo.projects.learenaadmin.questions.allQuestion.AllQuestions"
-        android:label="AllQuestions"
-        tools:layout="@layout/all_questions_fragment" >
+        android:label="All Questions"
+        tools:layout="@layout/all_questions_fragment">
         <action
             android:id="@+id/action_allQuestions_to_newQuestion"
             app:destination="@id/newQuestion" />
         <action
             android:id="@+id/action_allQuestions_to_questionDetails"
             app:destination="@id/questionDetails" />
-        <argument android:name="categoryName"
+        <argument
+            android:name="categoryName"
             app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/newQuestion"
         android:name="gustavo.projects.learenaadmin.questions.newQuestion.NewQuestion"
-        android:label="NewQuestion"
+        android:label="Create new question"
         tools:layout="@layout/new_question_fragment">
         <action
             android:id="@+id/action_newQuestion_to_allQuestions"
@@ -81,7 +82,7 @@
     <fragment
         android:id="@+id/questionDetails"
         android:name="gustavo.projects.learenaadmin.questions.questionDetails.QuestionDetails"
-        android:label="QuestionDetails"
+        android:label="Question Details"
         tools:layout="@layout/question_details_fragment">
         <argument
             android:name="categoryName"
@@ -91,6 +92,7 @@
             app:argType="string" />
         <action
             android:id="@+id/action_questionDetails_to_allQuestions"
-            app:destination="@id/allQuestions" />
+            app:destination="@id/allQuestions"
+            app:popUpTo="@id/categories" />
     </fragment>
 </navigation>
