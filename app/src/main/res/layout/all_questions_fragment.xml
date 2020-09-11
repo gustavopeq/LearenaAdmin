@@ -28,59 +28,58 @@
             android:textSize="18sp"/>
 
         <ImageView
-            android:id="@+id/starsImg"
+            android:id="@+id/starsImg5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_star_border_black_24dp"
-            app:layout_constraintBottom_toBottomOf="@+id/starsImg5"
-            app:layout_constraintEnd_toEndOf="@+id/outlinedTextField"
-            app:layout_constraintTop_toTopOf="@+id/starsImg5" />
+            app:layout_constraintBottom_toBottomOf="@+id/starsImg1"
+            app:layout_constraintEnd_toEndOf="@+id/categoryDescriptionTextInput"
+            app:layout_constraintTop_toTopOf="@+id/starsImg1" />
 
         <ImageView
-            android:id="@+id/starsImg2"
+            android:id="@+id/starsImg4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_star_border_black_24dp"
-            app:layout_constraintBottom_toBottomOf="@+id/starsImg5"
-            app:layout_constraintEnd_toStartOf="@+id/starsImg"
-            app:layout_constraintTop_toTopOf="@+id/starsImg5" />
+            app:layout_constraintBottom_toBottomOf="@+id/starsImg1"
+            app:layout_constraintEnd_toStartOf="@+id/starsImg5"
+            app:layout_constraintTop_toTopOf="@+id/starsImg1" />
 
         <ImageView
             android:id="@+id/starsImg3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_star_black_24dp"
-            app:layout_constraintBottom_toBottomOf="@+id/starsImg5"
-            app:layout_constraintEnd_toStartOf="@+id/starsImg2"
-            app:layout_constraintTop_toTopOf="@+id/starsImg5" />
+            app:layout_constraintBottom_toBottomOf="@+id/starsImg1"
+            app:layout_constraintEnd_toStartOf="@+id/starsImg4"
+            app:layout_constraintTop_toTopOf="@+id/starsImg1" />
 
         <ImageView
-            android:id="@+id/starsImg4"
+            android:id="@+id/starsImg2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_star_black_24dp"
-            app:layout_constraintBottom_toBottomOf="@+id/starsImg5"
+            app:layout_constraintBottom_toBottomOf="@+id/starsImg1"
             app:layout_constraintEnd_toStartOf="@+id/starsImg3"
-            app:layout_constraintTop_toTopOf="@+id/starsImg5"
+            app:layout_constraintTop_toTopOf="@+id/starsImg1"
             app:layout_constraintVertical_bias="0.4" />
 
         <ImageView
-            android:id="@+id/starsImg5"
+            android:id="@+id/starsImg1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_star_black_24dp"
             app:layout_constraintBottom_toBottomOf="@+id/descriptionTextView"
-            app:layout_constraintEnd_toStartOf="@+id/starsImg4"
+            app:layout_constraintEnd_toStartOf="@+id/starsImg2"
             app:layout_constraintTop_toTopOf="@+id/descriptionTextView"
             app:layout_constraintVertical_bias="0.4" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/outlinedTextField"
+            android:id="@+id/categoryDescriptionTextInput"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/descriptionTextView"
-            android:layout_marginTop="8dp"
             android:layout_marginHorizontal="@dimen/defaultMargin">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -100,7 +99,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/outlinedTextField"
+            app:layout_constraintTop_toBottomOf="@+id/categoryDescriptionTextInput"
             app:layout_constraintVertical_bias="0.0"
             tools:listitem="@layout/all_questions_item" />
 

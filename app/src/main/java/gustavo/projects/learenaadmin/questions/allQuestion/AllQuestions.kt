@@ -42,6 +42,10 @@ class AllQuestions : Fragment(), CategoryAdapter.OnItemClickListener {
 
         viewModel.getQuestionsFromDatabase()
 
+        viewModel.categoryDescription.observe(viewLifecycleOwner, Observer {
+            binding.categoryDescriptionTextInput.editText?.setText(it)
+        })
+
         viewModel.listOfQuestionItem.observe(viewLifecycleOwner, Observer {
             listOfRecyclerItem = it
             adapter.submitQuestionItemList(listOfRecyclerItem)

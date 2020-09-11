@@ -23,26 +23,28 @@ class AllQuestionsViewModel(private var categoryName: String) : ViewModel() {
     val listOfQuestionItem: LiveData<ArrayList<QuestionItem>>
         get() = _listOfQuestionItem
 
+    private val _categoryDescription = MutableLiveData<String>()
+    val categoryDescription: LiveData<String>
+        get() = _categoryDescription
+
     fun getQuestionsFromDatabase() {
         categoryDocumentRef = db.collection("Users").document(auth.currentUser?.uid.toString()).collection(categoryName).document("QuestionDocument")
         categoryDocumentRef
             .get()
             .addOnSuccessListener { document ->
-                if(document.exists()) {
-                    if (document.data!!.isNotEmpty()) {
-                        val questions = document.toObject<QuestionObject>()
+                    for (field in document.data?.keys!!) {
+                        if (field == "mapOfQuestions") {
+                            val questions = document.toObject<QuestionObject>()
 
-                        if (questions != null) {
-                            mapOfQuestions = questions.mapOfQuestions?.toMutableMap()!!
-                            updateRecyclerQuestionsItemList()
-                            Log.d("print", "DB accessed and questions loaded")
+                            if (questions != null) {
+                                mapOfQuestions = questions.mapOfQuestions?.toMutableMap()!!
+                                updateRecyclerQuestionsItemList()
+                                Log.d("print", "DB accessed and questions loaded")
+                            }
+                        }else {
+                            _categoryDescription.value = document.data!![field] as String?
                         }
-                    } else {
-                        Log.d("print", "This user haven't created any question yet")
                     }
-                } else {
-                    Log.d("print", "This user haven't created any question yet")
-                }
             }
             .addOnFailureListener { exception ->
                 Log.d("print", "Error getting documents.", exception)

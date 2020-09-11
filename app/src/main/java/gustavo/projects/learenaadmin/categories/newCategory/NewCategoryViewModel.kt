@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -29,11 +30,7 @@ class NewCategoryViewModel : ViewModel() {
     val categoryAlreadyExists: LiveData<Boolean>
         get() = _categoryAlreadyExists
 
-    private val _categoryCreationFailed = MutableLiveData<Boolean>()
-    val categoryCreationFailed: LiveData<Boolean>
-        get() = _categoryCreatedSuccessfully
-
-    fun addNewCategoryToDatabase(name: String) {
+    fun addNewCategoryToDatabase(name: String, description: String) {
         userDocumentRef = db.collection("Users").document(auth.currentUser?.uid.toString())
         userDocumentRef
             .get()
@@ -50,14 +47,14 @@ class NewCategoryViewModel : ViewModel() {
                             Log.d("print", "This category name already exists")
                         }else {
                             userDocumentRef.update("listOfCategories", FieldValue.arrayUnion(name))
-                            _categoryCreatedSuccessfully.value = true
+                            setCategoryDescription(name, description)
                             Log.d("print", "Category $name created successfully")
                         }
                     }
                 }else{
                     Log.d("print", "This user haven't created any category yet")
                     userDocumentRef.update("listOfCategories", FieldValue.arrayUnion(name))
-                    _categoryCreatedSuccessfully.value = true
+                    setCategoryDescription(name, description)
                     Log.d("print", "Category $name created successfully")
                 }
             }
@@ -72,6 +69,20 @@ class NewCategoryViewModel : ViewModel() {
 
     fun resetCategoryAlreadyExists() {
         _categoryAlreadyExists.value = false
+    }
+
+    private fun setCategoryDescription(categoryName: String, categoryDescription: String) {
+        val questionDocRef = userDocumentRef.collection(categoryName).document("QuestionDocument")
+        questionDocRef.get()
+            .addOnSuccessListener {
+                val description = hashMapOf("categoryDescription" to categoryDescription)
+                questionDocRef.set(description)
+                Log.d("print", "Category description set")
+                _categoryCreatedSuccessfully.value = true
+            }
+            .addOnFailureListener { exception ->
+                Log.d("print", "Error getting documents.", exception)
+            }
     }
 
 }

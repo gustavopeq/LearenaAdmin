@@ -50,7 +50,8 @@
         tools:layout="@layout/new_category_fragment">
         <action
             android:id="@+id/action_newCategory_to_categories"
-            app:destination="@id/categories" />
+            app:destination="@id/categories"
+            app:popUpTo="@id/categories" />
     </fragment>
     <fragment
         android:id="@+id/allQuestions"
