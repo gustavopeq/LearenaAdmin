@@ -19,6 +19,26 @@ import gustavo.projects.learenaadmin.databinding.NewCategoryFragmentBinding
 
 class NewCategory : Fragment(), IKeyboardUtil, INewCategoryForm {
 
+    override var starImg1: ImageView
+        get() = binding.starImg1
+        set(value) {}
+    override var starImg2: ImageView
+        get() = binding.starImg2
+        set(value) {}
+    override var starImg3: ImageView
+        get() = binding.starImg3
+        set(value) {}
+    override var starImg4: ImageView
+        get() = binding.starImg4
+        set(value) {}
+    override var starImg5: ImageView
+        get() = binding.starImg5
+        set(value) {}
+    override var listOfStarsImg: ArrayList<ImageView>
+        get() = createArrayOfStarsImg()
+        set(value) {}
+    override var starLevel: Int = 0
+
     private lateinit var viewModel: NewCategoryViewModel
     private lateinit var binding: NewCategoryFragmentBinding
 
@@ -111,7 +131,7 @@ class NewCategory : Fragment(), IKeyboardUtil, INewCategoryForm {
     private fun onCreateNewCategory() {
         val categoryName = binding.newCategoryNameTextField.editText?.text.toString()
         val categoryDescription = binding.newCategoryDescription.editText?.text.toString()
-        viewModel.addNewCategoryToDatabase(categoryName, categoryDescription)
+        viewModel.addNewCategoryToDatabase(categoryName, categoryDescription, starLevel)
     }
 
     private fun returnToCategoryScreen() {
@@ -126,24 +146,5 @@ class NewCategory : Fragment(), IKeyboardUtil, INewCategoryForm {
     private fun nameAlreadyExistsError() {
         binding.newCategoryNameTextField.error = "You already have a category with this name"
     }
-
-    override var starImg1: ImageView
-        get() = binding.starImg1
-        set(value) {}
-    override var starImg2: ImageView
-        get() = binding.starImg2
-        set(value) {}
-    override var starImg3: ImageView
-        get() = binding.starImg3
-        set(value) {}
-    override var starImg4: ImageView
-        get() = binding.starImg4
-        set(value) {}
-    override var starImg5: ImageView
-        get() = binding.starImg5
-        set(value) {}
-    override var listOfStarsImg: ArrayList<ImageView>
-        get() = createArrayOfStarsImg()
-        set(value) {}
 
 }

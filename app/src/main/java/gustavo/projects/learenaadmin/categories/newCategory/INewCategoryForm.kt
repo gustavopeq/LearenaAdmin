@@ -1,6 +1,5 @@
 package gustavo.projects.learenaadmin.categories.newCategory
 
-import android.media.Image
 import android.widget.ImageView
 import gustavo.projects.learenaadmin.R
 
@@ -12,6 +11,7 @@ interface INewCategoryForm {
     var starImg4: ImageView
     var starImg5: ImageView
     var listOfStarsImg: ArrayList<ImageView>
+    var starLevel: Int
 
     fun createArrayOfStarsImg() : ArrayList<ImageView>{
         val arrayOfStarsImg = arrayListOf<ImageView>()
@@ -32,15 +32,18 @@ interface INewCategoryForm {
 
     private fun changeAllTheStarsImg(selectedStar: ImageView) {
         var maximumLevelSet = false
+        starLevel = 0
         for(starImg in listOfStarsImg) {
             if(starImg != selectedStar) {
                 if(!maximumLevelSet) {
                     selectStarImg(starImg)
+                    starLevel += 1
                 }else {
                     unselectStarImg(starImg)
                 }
             }else if(starImg == selectedStar) {
                 selectStarImg(starImg)
+                starLevel += 1
                 maximumLevelSet = true
             }
         }

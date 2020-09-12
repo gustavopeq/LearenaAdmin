@@ -30,7 +30,7 @@ class NewCategoryViewModel : ViewModel() {
     val categoryAlreadyExists: LiveData<Boolean>
         get() = _categoryAlreadyExists
 
-    fun addNewCategoryToDatabase(name: String, description: String) {
+    fun addNewCategoryToDatabase(name: String, description: String, starLevel: Int) {
         userDocumentRef = db.collection("Users").document(auth.currentUser?.uid.toString())
         userDocumentRef
             .get()
@@ -47,14 +47,14 @@ class NewCategoryViewModel : ViewModel() {
                             Log.d("print", "This category name already exists")
                         }else {
                             userDocumentRef.update("listOfCategories", FieldValue.arrayUnion(name))
-                            setCategoryDescription(name, description)
+                            setCategoryInformation(name, description, starLevel)
                             Log.d("print", "Category $name created successfully")
                         }
                     }
                 }else{
                     Log.d("print", "This user haven't created any category yet")
                     userDocumentRef.update("listOfCategories", FieldValue.arrayUnion(name))
-                    setCategoryDescription(name, description)
+                    setCategoryInformation(name, description, starLevel)
                     Log.d("print", "Category $name created successfully")
                 }
             }
@@ -71,13 +71,16 @@ class NewCategoryViewModel : ViewModel() {
         _categoryAlreadyExists.value = false
     }
 
-    private fun setCategoryDescription(categoryName: String, categoryDescription: String) {
+    private fun setCategoryInformation(categoryName: String, categoryDescription: String, categoryStarLevel: Int) {
         val questionDocRef = userDocumentRef.collection(categoryName).document("QuestionDocument")
         questionDocRef.get()
             .addOnSuccessListener {
                 val description = hashMapOf("categoryDescription" to categoryDescription)
-                questionDocRef.set(description)
+                questionDocRef.set(description, SetOptions.merge())
                 Log.d("print", "Category description set")
+                val starLevel = hashMapOf("starLevel" to categoryStarLevel)
+                questionDocRef.set(starLevel, SetOptions.merge())
+                Log.d("print", "Category star level set")
                 _categoryCreatedSuccessfully.value = true
             }
             .addOnFailureListener { exception ->

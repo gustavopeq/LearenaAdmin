@@ -41,7 +41,8 @@ class AllQuestionsViewModel(private var categoryName: String) : ViewModel() {
                                 updateRecyclerQuestionsItemList()
                                 Log.d("print", "DB accessed and questions loaded")
                             }
-                        }else {
+                        }else if (field == "categoryDescription") {
+                            Log.d("print", field)
                             _categoryDescription.value = document.data!![field] as String?
                         }
                     }
