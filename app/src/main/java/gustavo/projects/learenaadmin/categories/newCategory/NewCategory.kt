@@ -37,7 +37,7 @@ class NewCategory : Fragment(), IKeyboardUtil, INewCategoryForm {
     override var listOfStarsImg: ArrayList<ImageView>
         get() = createArrayOfStarsImg()
         set(value) {}
-    override var starLevel: Int = 0
+    override var starLevel: Int = 1
 
     private lateinit var viewModel: NewCategoryViewModel
     private lateinit var binding: NewCategoryFragmentBinding

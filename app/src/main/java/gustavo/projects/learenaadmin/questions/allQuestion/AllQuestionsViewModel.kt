@@ -27,6 +27,10 @@ class AllQuestionsViewModel(private var categoryName: String) : ViewModel() {
     val categoryDescription: LiveData<String>
         get() = _categoryDescription
 
+    private val _categoryStarLevel = MutableLiveData<Int>()
+    val categoryStarLevel: LiveData<Int>
+        get() = _categoryStarLevel
+
     fun getQuestionsFromDatabase() {
         categoryDocumentRef = db.collection("Users").document(auth.currentUser?.uid.toString()).collection(categoryName).document("QuestionDocument")
         categoryDocumentRef
@@ -42,8 +46,10 @@ class AllQuestionsViewModel(private var categoryName: String) : ViewModel() {
                                 Log.d("print", "DB accessed and questions loaded")
                             }
                         }else if (field == "categoryDescription") {
-                            Log.d("print", field)
                             _categoryDescription.value = document.data!![field] as String?
+                        }else if (field == "starLevel") {
+                            val starLevel = document.data!![field] as Long?
+                            _categoryStarLevel.value = starLevel?.toInt()
                         }
                     }
             }

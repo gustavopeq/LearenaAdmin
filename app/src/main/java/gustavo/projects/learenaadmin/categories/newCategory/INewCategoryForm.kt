@@ -30,21 +30,33 @@ interface INewCategoryForm {
         }
     }
 
+    // THIS FUNCTION WILL BE USED WHEN THE USER IS SELECTING THE STAR LEVEL
     private fun changeAllTheStarsImg(selectedStar: ImageView) {
         var maximumLevelSet = false
         starLevel = 0
-        for(starImg in listOfStarsImg) {
-            if(starImg != selectedStar) {
-                if(!maximumLevelSet) {
+        for (starImg in listOfStarsImg) {
+            if (starImg != selectedStar) {
+                if (!maximumLevelSet) {
                     selectStarImg(starImg)
                     starLevel += 1
                 }else {
                     unselectStarImg(starImg)
                 }
-            }else if(starImg == selectedStar) {
+            }else if (starImg == selectedStar) {
                 selectStarImg(starImg)
                 starLevel += 1
                 maximumLevelSet = true
+            }
+        }
+    }
+
+    // THIS FUNCTION WILL BE USED WHEN DISPLAYING A CATEGORY STAR LEVEL
+    fun displayStarLevel(starLevel: Int) {
+        for ((index, starImg) in listOfStarsImg.withIndex()) {
+            if (index + 1 <= starLevel) {
+                selectStarImg(starImg)
+            }else {
+                unselectStarImg(starImg)
             }
         }
     }

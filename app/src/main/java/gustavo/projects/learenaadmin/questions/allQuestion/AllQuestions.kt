@@ -5,18 +5,39 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import gustavo.projects.learenaadmin.MainActivity
 
 import gustavo.projects.learenaadmin.R
 import gustavo.projects.learenaadmin.categories.CategoryAdapter
+import gustavo.projects.learenaadmin.categories.newCategory.INewCategoryForm
 import gustavo.projects.learenaadmin.databinding.AllQuestionsFragmentBinding
 
-class AllQuestions : Fragment(), CategoryAdapter.OnItemClickListener {
+class AllQuestions : Fragment(), CategoryAdapter.OnItemClickListener, INewCategoryForm {
+
+    override var starImg1: ImageView
+        get() = binding.starsImg1
+        set(value) {}
+    override var starImg2: ImageView
+        get() = binding.starsImg2
+        set(value) {}
+    override var starImg3: ImageView
+        get() = binding.starsImg3
+        set(value) {}
+    override var starImg4: ImageView
+        get() = binding.starsImg4
+        set(value) {}
+    override var starImg5: ImageView
+        get() = binding.starsImg5
+        set(value) {}
+    override var listOfStarsImg: ArrayList<ImageView>
+        get() = createArrayOfStarsImg()
+        set(value) {}
+    override var starLevel: Int = 1
 
     private lateinit var binding: AllQuestionsFragmentBinding
     private lateinit var viewModel: AllQuestionsViewModel
@@ -44,6 +65,10 @@ class AllQuestions : Fragment(), CategoryAdapter.OnItemClickListener {
 
         viewModel.categoryDescription.observe(viewLifecycleOwner, Observer {
             binding.categoryDescriptionTextInput.editText?.setText(it)
+        })
+
+        viewModel.categoryStarLevel.observe(viewLifecycleOwner, Observer {
+            displayStarLevel(it)
         })
 
         viewModel.listOfQuestionItem.observe(viewLifecycleOwner, Observer {
