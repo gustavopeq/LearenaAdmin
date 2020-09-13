@@ -1,10 +1,8 @@
 package gustavo.projects.learenaadmin.questions.allQuestion
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -78,7 +76,22 @@ class AllQuestions : Fragment(), CategoryAdapter.OnItemClickListener, INewCatego
 
         binding.createNewQuestionFab.setOnClickListener { navigateToNewQuestion() }
 
+        setHasOptionsMenu(true)
+
         return binding.root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.edit_category, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.editCategoryIcon -> navigateToEditCategory()
+            android.R.id.home -> onBackArrowClick()
+        }
+        return true
     }
 
     private fun setRecyclerView() {
@@ -100,6 +113,14 @@ class AllQuestions : Fragment(), CategoryAdapter.OnItemClickListener, INewCatego
 
     private fun navigateToNewQuestion() {
         findNavController().navigate(AllQuestionsDirections.actionAllQuestionsToNewQuestion(categoryName))
+    }
+
+    private fun navigateToEditCategory() {
+        findNavController().navigate(AllQuestionsDirections.actionAllQuestionsToEditCategory(categoryName))
+    }
+
+    private fun onBackArrowClick() {
+        findNavController().navigate(AllQuestionsDirections.actionAllQuestionsToCategories())
     }
 
 }

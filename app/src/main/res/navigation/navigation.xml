@@ -67,6 +67,12 @@
         <argument
             android:name="categoryName"
             app:argType="string" />
+        <action
+            android:id="@+id/action_allQuestions_to_editCategory"
+            app:destination="@id/editCategory" />
+        <action
+            android:id="@+id/action_allQuestions_to_categories"
+            app:destination="@id/categories" />
     </fragment>
     <fragment
         android:id="@+id/newQuestion"
@@ -94,6 +100,19 @@
         <action
             android:id="@+id/action_questionDetails_to_allQuestions"
             app:destination="@id/allQuestions"
+            app:popUpTo="@id/categories" />
+    </fragment>
+    <fragment
+        android:id="@+id/editCategory"
+        android:name="gustavo.projects.learenaadmin.questions.allQuestion.editCategory.EditCategory"
+        android:label="EditCategory"
+        tools:layout="@layout/edit_category_fragment">
+        <argument
+            android:name="categoryName"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_editCategory_to_categories"
+            app:destination="@id/categories"
             app:popUpTo="@id/categories" />
     </fragment>
 </navigation>

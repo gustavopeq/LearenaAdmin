@@ -85,7 +85,6 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="This field will show the description related to this category, such as what is expected from the questions and the classes that would benefit from this kind of questions"
                 android:enabled="false"/>
 
         </com.google.android.material.textfield.TextInputLayout>
