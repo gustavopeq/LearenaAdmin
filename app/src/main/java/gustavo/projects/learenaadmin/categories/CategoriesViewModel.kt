@@ -69,6 +69,7 @@ class CategoriesViewModel : ViewModel() {
                     userDocumentRef.update("listOfCategories", FieldValue.arrayRemove(categoryName))
                     Log.d("print", "The category $categoryName was removed!")
                     arrayOfCategories.remove(categoryName)
+                    deleteDocumentsFromCategory(categoryName)
                     updateRecyclerCategoriesItemList()
                     _itemRemovedSuccessfully.value = true
                 }else{
@@ -78,6 +79,10 @@ class CategoriesViewModel : ViewModel() {
             .addOnFailureListener { exception ->
                 Log.d("print", "Error getting documents.", exception)
             }
+    }
+
+    private fun deleteDocumentsFromCategory(categoryName: String) {
+        userDocumentRef.collection(categoryName).document("QuestionDocument").delete()
     }
 
     fun resetItemRemovedFlag() {

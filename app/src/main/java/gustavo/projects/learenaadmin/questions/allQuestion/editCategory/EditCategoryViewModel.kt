@@ -147,9 +147,11 @@ class EditCategoryViewModel(categoryName: String) : ViewModel() {
                 questionDocRef.set(description, SetOptions.merge())
                 val starLevel = hashMapOf("starLevel" to questionDocument.starLeveL)
                 questionDocRef.set(starLevel, SetOptions.merge())
-                val mapOfQuestion = QuestionObject(questionDocument.listOfQuestions)
-                questionDocRef.set(mapOfQuestion, SetOptions.merge())
 
+                if(questionDocument.listOfQuestions != null) {
+                    val mapOfQuestion = QuestionObject(questionDocument.listOfQuestions)
+                    questionDocRef.set(mapOfQuestion, SetOptions.merge())
+                }
                 deleteCategoryFromDatabase(categoryName)
                 categoryName = newCategoryName
             }
@@ -165,6 +167,7 @@ class EditCategoryViewModel(categoryName: String) : ViewModel() {
                 if (document.data!!.isNotEmpty()) {
                     userDocumentRef.update("listOfCategories", FieldValue.arrayRemove(categoryName))
                     Log.d("print", "The category $categoryName was removed!")
+                    deleteDocumentsFromCategory(categoryName)
                     _categoryEditedSuccessfully.value = true
                     isChangingName = false
                 }else{
@@ -174,6 +177,10 @@ class EditCategoryViewModel(categoryName: String) : ViewModel() {
             .addOnFailureListener { exception ->
                 Log.d("print", "Error getting documents.", exception)
             }
+    }
+
+    private fun deleteDocumentsFromCategory(categoryName: String) {
+        userDocumentRef.collection(categoryName).document("QuestionDocument").delete()
     }
 
 }

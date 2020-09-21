@@ -60,10 +60,7 @@ class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdap
         val newCategoryName = CategoriesArgs.fromBundle(requireArguments()).newCategoryName
 
         if (newCategoryName != null) {
-            Snackbar.make(container!!, "Category $newCategoryName created!", Snackbar.LENGTH_LONG)
-                .setAction("Undo") {
-                    viewModel.deleteCategoryFromDatabase(newCategoryName)
-                }.show()
+            Snackbar.make(container!!, "Category $newCategoryName created!", Snackbar.LENGTH_LONG).show()
             arguments?.clear()
         }
     }
