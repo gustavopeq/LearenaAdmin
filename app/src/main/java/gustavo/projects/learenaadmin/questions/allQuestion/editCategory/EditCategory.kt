@@ -1,15 +1,17 @@
 package gustavo.projects.learenaadmin.questions.allQuestion.editCategory
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.navArgs
+import androidx.navigation.fragment.findNavController
 
 import gustavo.projects.learenaadmin.R
 import gustavo.projects.learenaadmin.categories.newCategory.INewCategoryForm
@@ -71,6 +73,10 @@ class EditCategory : Fragment(), INewCategoryForm {
             nameAlreadyExistsError()
         })
 
+        viewModel.categoryEditedSuccessfully.observe(viewLifecycleOwner, Observer {
+            confirmSaveChanges()
+        })
+
         setOnClickStarListeners()
 
         return binding.root
@@ -84,8 +90,15 @@ class EditCategory : Fragment(), INewCategoryForm {
         if(binding.editCategoryName.editText?.text.toString() == viewModel.categoryName) {
             viewModel.updateCategoryInformation(binding.editCategoryDescription.editText?.text.toString(), starLevel)
         }else {
-            viewModel.updateCategoryName(binding.editCategoryName.editText?.text.toString(), binding.editCategoryDescription.editText?.text.toString(), starLevel)
+            viewModel.isChangingName = true
+            viewModel.updateCategoryInformation(binding.editCategoryDescription.editText?.text.toString(), starLevel)
+            viewModel.updateCategoryName(binding.editCategoryName.editText?.text.toString())
         }
+    }
+
+    private fun confirmSaveChanges() {
+        Toast.makeText(this.context, "Category edited successfully", Toast.LENGTH_SHORT).show()
+        findNavController().navigate(EditCategoryDirections.actionEditCategoryToAllQuestions(viewModel.categoryName))
     }
 
 }

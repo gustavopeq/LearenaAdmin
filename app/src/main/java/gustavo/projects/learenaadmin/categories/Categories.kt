@@ -1,7 +1,6 @@
 package gustavo.projects.learenaadmin.categories
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -63,7 +62,7 @@ class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdap
         if (newCategoryName != null) {
             Snackbar.make(container!!, "Category $newCategoryName created!", Snackbar.LENGTH_LONG)
                 .setAction("Undo") {
-                    viewModel.deleteCategoyFromDatabase(newCategoryName)
+                    viewModel.deleteCategoryFromDatabase(newCategoryName)
                 }.show()
             arguments?.clear()
         }
@@ -106,7 +105,7 @@ class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdap
     }
 
     private fun deleteCategoryItem() {
-        viewModel.deleteCategoyFromDatabase(categoryNameToDelete)
+        viewModel.deleteCategoryFromDatabase(categoryNameToDelete)
     }
 
     private fun resetItemRemovedFlag() {

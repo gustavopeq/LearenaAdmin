@@ -1,5 +1,4 @@
 package gustavo.projects.learenaadmin.questions
 
-import gustavo.projects.learenaadmin.questions.allQuestion.QuestionObject
 
-data class QuestionDocument(var listOfQuestions: QuestionObject, var categoryDescription: String, var starLeveL: Int)
+data class QuestionDocument(var listOfQuestions: MutableMap<String, ArrayList<String>>? = null, var categoryDescription: String? = null, var starLeveL: Int = 0)

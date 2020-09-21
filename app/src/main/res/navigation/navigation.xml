@@ -111,8 +111,8 @@
             android:name="categoryName"
             app:argType="string" />
         <action
-            android:id="@+id/action_editCategory_to_categories"
-            app:destination="@id/categories"
+            android:id="@+id/action_editCategory_to_allQuestions"
+            app:destination="@id/allQuestions"
             app:popUpTo="@id/categories" />
     </fragment>
 </navigation>

@@ -61,7 +61,7 @@ class CategoriesViewModel : ViewModel() {
         _listOfCategoryItem.value = listOfItems
     }
 
-    fun deleteCategoyFromDatabase(categoryName: String) {
+    fun deleteCategoryFromDatabase(categoryName: String) {
         userDocumentRef
             .get()
             .addOnSuccessListener { document ->
