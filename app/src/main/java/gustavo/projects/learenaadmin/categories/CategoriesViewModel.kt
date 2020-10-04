@@ -54,7 +54,7 @@ class CategoriesViewModel : ViewModel() {
         val listOfItems = ArrayList<CategoryItem>()
 
         for(category in arrayOfCategories) {
-            val item = CategoryItem(category, 0)
+            val item = CategoryItem(category)
             listOfItems.add(item)
         }
 
