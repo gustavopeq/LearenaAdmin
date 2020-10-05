@@ -1,5 +1,6 @@
 package gustavo.projects.learenaadmin.categories
 
+import android.opengl.Visibility
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -45,6 +46,12 @@ class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdap
 
         viewModel.listOfCategoryItem.observe(viewLifecycleOwner, Observer {
             adapter.submitCategoryItemList(it)
+            binding.categoryLoadingIcon.visibility = View.GONE
+        })
+
+        viewModel.noCategoryFound.observe(viewLifecycleOwner, Observer {
+            binding.categoryLoadingIcon.visibility = View.GONE
+            binding.noCategoryCreatedTextView.visibility = View.VISIBLE
         })
 
         viewModel.itemRemovedSuccessfully.observe(viewLifecycleOwner, Observer { itemRemovedSuccessfully ->

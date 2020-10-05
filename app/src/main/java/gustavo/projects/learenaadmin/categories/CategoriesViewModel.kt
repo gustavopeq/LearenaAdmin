@@ -28,21 +28,32 @@ class CategoriesViewModel : ViewModel() {
     val itemRemovedSuccessfully: LiveData<Boolean>
         get() = _itemRemovedSuccessfully
 
+    private val _noCategoryFound = MutableLiveData<Boolean>()
+    val noCategoryFound: LiveData<Boolean>
+        get() = _noCategoryFound
+
     fun getCategoriesFromDatabase() {
         userDocumentRef = db.collection("Users").document(auth.currentUser?.uid.toString())
         userDocumentRef
             .get()
             .addOnSuccessListener { document ->
+                var anyCategoryFound = false
                 if (document.data!!.isNotEmpty()) {
                     val categories = document.toObject<CategoryObject>()
 
-                    if (categories != null) {
+                    if (categories != null && categories.listOfCategories!!.isNotEmpty()) {
                         arrayOfCategories = categories.listOfCategories?.toMutableSet()!!
+                        _noCategoryFound.value = false
+                        anyCategoryFound = true
                         updateRecyclerCategoriesItemList()
                         Log.d("print", "DB accessed and categories loaded")
                     }
                 }else{
                     Log.d("print", "This user haven't created any category yet")
+                }
+
+                if(!anyCategoryFound) {
+                    _noCategoryFound.value = true
                 }
             }
             .addOnFailureListener { exception ->
@@ -54,7 +65,7 @@ class CategoriesViewModel : ViewModel() {
         val listOfItems = ArrayList<CategoryItem>()
 
         for(category in arrayOfCategories) {
-            val item = CategoryItem(category, 0)
+            val item = CategoryItem(category)
             listOfItems.add(item)
         }
 
