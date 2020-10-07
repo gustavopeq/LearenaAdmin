@@ -1,25 +1,24 @@
 package gustavo.projects.learenaadmin.categories
 
-import android.opengl.Visibility
 import android.os.Bundle
+import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.PopupMenu
+import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import gustavo.projects.learenaadmin.BasicDialogWindow
 import gustavo.projects.learenaadmin.R
 import gustavo.projects.learenaadmin.databinding.CategoriesFragmentBinding
 
 
-class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdapter.OnMoreOptionClickListener, PopupMenu.OnMenuItemClickListener {
+class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdapter.OnMoreOptionClickListener, PopupMenu.OnMenuItemClickListener, BasicDialogWindow {
 
     private lateinit var binding: CategoriesFragmentBinding
     private lateinit var viewModel: CategoriesViewModel
@@ -27,6 +26,7 @@ class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdap
     private lateinit var adapter: CategoryAdapter
     private var itemPositionToDelete = 0
     private lateinit var categoryNameToDelete: String
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,6 +59,13 @@ class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdap
         })
 
         binding.newCategoryFab.setOnClickListener { findNavController().navigate(R.id.action_categories_to_newCategory) }
+
+        setHasOptionsMenu(true)
+
+        // Override onBackButtonPressed
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            onNavigateUpButtonPressed()
+        }
 
         return binding.root
     }
@@ -118,5 +125,25 @@ class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdap
 
     private fun navigateToCategoryQuestions(categoryName: String) {
         findNavController().navigate(CategoriesDirections.actionCategoriesToAllQuestions(categoryName))
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            android.R.id.home -> onNavigateUpButtonPressed()
+        }
+        return true
+    }
+
+    private fun onNavigateUpButtonPressed() {
+        onCreateDialog(this.requireActivity(), "Are you sure you want to disconnect from your account?", "Cancel", "Disconnect")
+
+    }
+
+    override fun onDialogPositiveBtn() {
+        // Nothing to implement
+    }
+
+    override fun onDialogNegativeBtn() {
+        findNavController().navigate(CategoriesDirections.actionCategoriesToLoginFragment())
     }
 }

@@ -15,7 +15,8 @@
             app:destination="@id/signupFragment" />
         <action
             android:id="@+id/action_loginFragment_to_categories"
-            app:destination="@id/categories" />
+            app:destination="@id/categories"
+            app:launchSingleTop="false" />
     </fragment>
     <fragment
         android:id="@+id/signupFragment"
@@ -42,6 +43,10 @@
         <action
             android:id="@+id/action_categories_to_allQuestions"
             app:destination="@id/allQuestions" />
+        <action
+            android:id="@+id/action_categories_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/loginFragment" />
     </fragment>
     <fragment
         android:id="@+id/newCategory"
@@ -72,7 +77,8 @@
             app:destination="@id/editCategory" />
         <action
             android:id="@+id/action_allQuestions_to_categories"
-            app:destination="@id/categories" />
+            app:destination="@id/categories"
+            app:popUpTo="@id/categories" />
     </fragment>
     <fragment
         android:id="@+id/newQuestion"
@@ -81,7 +87,8 @@
         tools:layout="@layout/new_question_fragment">
         <action
             android:id="@+id/action_newQuestion_to_allQuestions"
-            app:destination="@id/allQuestions" />
+            app:destination="@id/allQuestions"
+            app:popUpTo="@id/categories" />
         <argument
             android:name="categoryName"
             app:argType="string" />

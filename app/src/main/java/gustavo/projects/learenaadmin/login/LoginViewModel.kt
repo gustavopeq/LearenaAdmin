@@ -36,4 +36,8 @@ class LoginViewModel : ViewModel() {
                 }
             }
     }
+
+    fun onResetLoginSuccessful() {
+        _loginSuccessful.value = false
+    }
 }

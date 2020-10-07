@@ -82,6 +82,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun loadCategoriesFragment() {
+        viewModel.onResetLoginSuccessful()
         findNavController().navigate(R.id.action_loginFragment_to_categories)
     }
 
