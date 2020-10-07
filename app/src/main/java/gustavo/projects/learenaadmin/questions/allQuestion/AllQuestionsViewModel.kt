@@ -31,17 +31,24 @@ class AllQuestionsViewModel(private var categoryName: String) : ViewModel() {
     val categoryStarLevel: LiveData<Int>
         get() = _categoryStarLevel
 
+    private val _noQuestionFound = MutableLiveData<Boolean>()
+    val noQuestionFound: LiveData<Boolean>
+        get() = _noQuestionFound
+
     fun getQuestionsFromDatabase() {
         categoryDocumentRef = db.collection("Users").document(auth.currentUser?.uid.toString()).collection(categoryName).document("QuestionDocument")
         categoryDocumentRef
             .get()
             .addOnSuccessListener { document ->
+                var anyQuestionFound = false
                     for (field in document.data?.keys!!) {
                         if (field == "mapOfQuestions") {
                             val questions = document.toObject<QuestionObject>()
 
-                            if (questions != null) {
+                            if (questions != null && questions.mapOfQuestions!!.isNotEmpty()) {
                                 mapOfQuestions = questions.mapOfQuestions?.toMutableMap()!!
+                                _noQuestionFound.value = false
+                                anyQuestionFound = true
                                 updateRecyclerQuestionsItemList()
                                 Log.d("print", "DB accessed and questions loaded")
                             }
@@ -52,6 +59,9 @@ class AllQuestionsViewModel(private var categoryName: String) : ViewModel() {
                             _categoryStarLevel.value = starLevel?.toInt()
                         }
                     }
+                if(!anyQuestionFound) {
+                    _noQuestionFound.value = true
+                }
             }
             .addOnFailureListener { exception ->
                 Log.d("print", "Error getting documents.", exception)

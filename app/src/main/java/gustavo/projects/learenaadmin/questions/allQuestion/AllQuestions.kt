@@ -72,6 +72,15 @@ class AllQuestions : Fragment(), CategoryAdapter.OnItemClickListener, INewCatego
         viewModel.listOfQuestionItem.observe(viewLifecycleOwner, Observer {
             listOfRecyclerItem = it
             adapter.submitQuestionItemList(listOfRecyclerItem)
+            binding.allQuestionLoadingIcon.visibility = View.GONE
+        })
+
+        viewModel.noQuestionFound.observe(viewLifecycleOwner, Observer {
+            if(it) {
+                binding.allQuestionLoadingIcon.visibility = View.GONE
+                binding.noQuestionsCreatedTextView.visibility = View.VISIBLE
+            }
+
         })
 
         binding.createNewQuestionFab.setOnClickListener { navigateToNewQuestion() }
