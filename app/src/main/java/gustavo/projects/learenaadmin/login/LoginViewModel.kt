@@ -18,6 +18,10 @@ class LoginViewModel : ViewModel() {
     val loginSuccessful: LiveData<Boolean>
         get() = _loginSuccessful
 
+    private val _loginFailed = MutableLiveData<Boolean>()
+    val loginFailed: LiveData<Boolean>
+        get() = _loginFailed
+
     fun signIn(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener() { task ->
@@ -33,6 +37,7 @@ class LoginViewModel : ViewModel() {
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.d("print", "Login failed")
+                    _loginFailed.value = true
                 }
             }
     }

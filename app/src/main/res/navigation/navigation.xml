@@ -8,7 +8,6 @@
     <fragment
         android:id="@+id/loginFragment"
         android:name="gustavo.projects.learenaadmin.login.LoginFragment"
-        android:label="LoginFragment"
         tools:layout="@layout/login_fragment">
         <action
             android:id="@+id/action_loginFragment_to_signupFragment"

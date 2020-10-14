@@ -46,11 +46,6 @@ class AllQuestions : Fragment(), CategoryAdapter.OnItemClickListener, INewCatego
 
     private lateinit var categoryName: String
 
-    override fun onResume() {
-        super.onResume()
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

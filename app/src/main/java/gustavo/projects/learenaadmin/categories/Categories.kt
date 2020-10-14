@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import gustavo.projects.learenaadmin.BasicDialogWindow
+import gustavo.projects.learenaadmin.MainActivity
 import gustavo.projects.learenaadmin.R
 import gustavo.projects.learenaadmin.databinding.CategoriesFragmentBinding
 
@@ -32,7 +33,7 @@ class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdap
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
+        (activity as MainActivity).supportActionBar?.show()
         binding = DataBindingUtil.inflate(inflater,
             R.layout.categories_fragment, container, false)
 

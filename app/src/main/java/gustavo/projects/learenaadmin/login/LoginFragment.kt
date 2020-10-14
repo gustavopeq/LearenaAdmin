@@ -11,13 +11,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import gustavo.projects.learenaadmin.MainActivity
 import gustavo.projects.learenaadmin.R
 import gustavo.projects.learenaadmin.databinding.LoginFragmentBinding
-import kotlinx.android.synthetic.main.login_fragment.*
 
 
 class LoginFragment : Fragment() {
 
+    private lateinit var binding: LoginFragmentBinding
     private lateinit var viewModel: LoginViewModel
 
 
@@ -26,7 +27,9 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val binding = DataBindingUtil.inflate<LoginFragmentBinding>(
+        (activity as MainActivity).supportActionBar?.hide()
+
+        binding = DataBindingUtil.inflate(
             inflater,
             R.layout.login_fragment,
             container,
@@ -38,7 +41,7 @@ class LoginFragment : Fragment() {
         binding.loginViewModel = viewModel
 
         // EMAIL TEXT FIELD UPDATE
-        binding.emailEditText.addTextChangedListener(object : TextWatcher {
+        binding.emailEditText.editText?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 // Nothing to implement
             }
@@ -53,7 +56,7 @@ class LoginFragment : Fragment() {
         })
 
         // PASSWORD TEXT FIELD UPDATE
-        binding.passwordEditText.addTextChangedListener(object : TextWatcher {
+        binding.passwordEditText.editText?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 // Nothing to implement
             }
@@ -63,27 +66,51 @@ class LoginFragment : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.signinBtn.isEnabled = s?.count()!! >= 6 && !binding.emailEditText.text.isNullOrBlank()
+                binding.signinBtn.isEnabled = s?.count()!! >= 6 && !binding.emailEditText.editText?.text.isNullOrBlank()
             }
         })
 
         binding.signinBtn.setOnClickListener {
-            viewModel.signIn(binding.emailEditText.text.toString(), binding.passwordEditText.text.toString())
-
+            onSignBtnClick()
         }
 
-        binding.newAccountBtn.setOnClickListener { findNavController().navigate(R.id.action_loginFragment_to_signupFragment) }
+        binding.newAccountBtn.setOnClickListener { navigateToSignupScreen() }
 
-        viewModel.loginSuccessful.observe(viewLifecycleOwner, Observer<Boolean>{loginSuccessful ->
+        viewModel.loginSuccessful.observe(viewLifecycleOwner, Observer{loginSuccessful ->
             if(loginSuccessful) loadCategoriesFragment()
+        })
+
+        viewModel.loginFailed.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                onLoginFailedFeedback()
+            }
         })
 
         return binding.root
     }
 
+    private fun onSignBtnClick() {
+        resetInputFieldErrors()
+        viewModel.signIn(binding.emailEditText.editText?.text.toString(), binding.passwordEditText.editText?.text.toString())
+    }
+
     private fun loadCategoriesFragment() {
         viewModel.onResetLoginSuccessful()
         findNavController().navigate(R.id.action_loginFragment_to_categories)
+    }
+
+    private fun navigateToSignupScreen() {
+        findNavController().navigate(R.id.action_loginFragment_to_signupFragment)
+    }
+
+    private fun resetInputFieldErrors() {
+        binding.emailEditText.error = null
+        binding.passwordEditText.error = null
+    }
+
+    private fun onLoginFailedFeedback() {
+        binding.emailEditText.error = " "
+        binding.passwordEditText.error = "Email or password incorrect"
     }
 
 }
