@@ -51,7 +51,7 @@
     <fragment
         android:id="@+id/newCategory"
         android:name="gustavo.projects.learenaadmin.categories.newCategory.NewCategory"
-        android:label="Create new category"
+        android:label="New category"
         tools:layout="@layout/new_category_fragment">
         <action
             android:id="@+id/action_newCategory_to_categories"
@@ -83,7 +83,7 @@
     <fragment
         android:id="@+id/newQuestion"
         android:name="gustavo.projects.learenaadmin.questions.newQuestion.NewQuestion"
-        android:label="Create new question"
+        android:label="New question"
         tools:layout="@layout/new_question_fragment">
         <action
             android:id="@+id/action_newQuestion_to_allQuestions"
@@ -96,7 +96,7 @@
     <fragment
         android:id="@+id/questionDetails"
         android:name="gustavo.projects.learenaadmin.questions.questionDetails.QuestionDetails"
-        android:label="Question Details"
+        android:label="Question details"
         tools:layout="@layout/question_details_fragment">
         <argument
             android:name="categoryName"
@@ -112,7 +112,7 @@
     <fragment
         android:id="@+id/editCategory"
         android:name="gustavo.projects.learenaadmin.questions.allQuestion.editCategory.EditCategory"
-        android:label="EditCategory"
+        android:label="Edit category"
         tools:layout="@layout/edit_category_fragment">
         <argument
             android:name="categoryName"
