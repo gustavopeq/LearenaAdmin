@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import gustavo.projects.learenaadmin.MainActivity
 
 import gustavo.projects.learenaadmin.R
 import gustavo.projects.learenaadmin.categories.CategoryAdapter
@@ -45,6 +46,11 @@ class AllQuestions : Fragment(), CategoryAdapter.OnItemClickListener, INewCatego
 
     private lateinit var categoryName: String
 
+    override fun onResume() {
+        super.onResume()
+
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,6 +58,8 @@ class AllQuestions : Fragment(), CategoryAdapter.OnItemClickListener, INewCatego
         binding = DataBindingUtil.inflate(inflater, R.layout.all_questions_fragment, container, false)
 
         categoryName = AllQuestionsArgs.fromBundle(requireArguments()).categoryName
+
+        (activity as MainActivity).setActionBarTitle(categoryName)
 
         val viewModelFactory = AllQuestionsViewModelFactory(categoryName)
 
