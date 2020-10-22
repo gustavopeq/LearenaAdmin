@@ -1,22 +1,21 @@
 package gustavo.projects.learenaadmin.questions.allQuestion.editCategory
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import gustavo.projects.learenaadmin.IKeyboardUtil
 
 import gustavo.projects.learenaadmin.R
 import gustavo.projects.learenaadmin.categories.newCategory.INewCategoryForm
 import gustavo.projects.learenaadmin.databinding.EditCategoryFragmentBinding
 
-class EditCategory : Fragment(), INewCategoryForm {
+class EditCategory : Fragment(), INewCategoryForm, IKeyboardUtil {
 
     override var starImg1: ImageView
         get() = binding.starImg1
@@ -78,6 +77,8 @@ class EditCategory : Fragment(), INewCategoryForm {
 
         setOnClickStarListeners()
 
+        setHasOptionsMenu(true)
+
         return binding.root
     }
 
@@ -93,10 +94,32 @@ class EditCategory : Fragment(), INewCategoryForm {
             viewModel.updateCategoryInformation(binding.editCategoryDescription.editText?.text.toString(), starLevel)
             viewModel.updateCategoryName(binding.editCategoryName.editText?.text.toString())
         }
+        hideKeyboard()
     }
 
     private fun confirmSaveChanges() {
         Toast.makeText(this.context, "Category edited successfully", Toast.LENGTH_SHORT).show()
+        findNavController().navigate(EditCategoryDirections.actionEditCategoryToAllQuestions(viewModel.categoryName))
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.edit_category_save, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.editCategorySaveIcon -> onSaveIconClick()
+            android.R.id.home -> onBackArrowClick()
+        }
+        return true
+    }
+
+    private fun onSaveIconClick() {
+        validateFields()
+    }
+
+    private fun onBackArrowClick() {
         findNavController().navigate(EditCategoryDirections.actionEditCategoryToAllQuestions(viewModel.categoryName))
     }
 
