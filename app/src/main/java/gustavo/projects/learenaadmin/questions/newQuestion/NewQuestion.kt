@@ -1,10 +1,8 @@
 package gustavo.projects.learenaadmin.questions.newQuestion
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SwitchCompat
 import androidx.databinding.DataBindingUtil
@@ -12,11 +10,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
+import gustavo.projects.learenaadmin.IKeyboardUtil
 
 import gustavo.projects.learenaadmin.R
 import gustavo.projects.learenaadmin.databinding.NewQuestionFragmentBinding
 
-class NewQuestion : Fragment(), IQuestionForm {
+class NewQuestion : Fragment(), IQuestionForm, IKeyboardUtil {
 
     private lateinit var viewModel: NewQuestionViewModel
     private lateinit var binding: NewQuestionFragmentBinding
@@ -72,15 +71,11 @@ class NewQuestion : Fragment(), IQuestionForm {
         correctSwitchesListeners()
         setTextChangedListener()
 
-        binding.createNewQuestionBtn.setOnClickListener {
-            if(validateAllParameters(this.requireActivity())) {
-                onCreateNewQuestion()
-            }
-        }
-
         viewModel.questionCreatedSuccessfully.observe(viewLifecycleOwner, Observer {
             if(it) confirmNewQuestionCreated()
         })
+
+        setHasOptionsMenu(true)
 
         return binding.root
     }
@@ -120,6 +115,31 @@ class NewQuestion : Fragment(), IQuestionForm {
     private fun confirmNewQuestionCreated() {
         viewModel.resetQuestionCreatedSuccessfully()
         Toast.makeText(context, "New question created", Toast.LENGTH_SHORT).show()
+        findNavController().navigate(NewQuestionDirections.actionNewQuestionToAllQuestions(categoryName))
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.new_question_save, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.newQuestionSaveIcon -> onSaveIconClick()
+            android.R.id.home -> onBackArrowClick()
+        }
+        return true
+    }
+
+    private fun onSaveIconClick() {
+        if(validateAllParameters(this.requireActivity())) {
+            onCreateNewQuestion()
+        }
+        hideKeyboard()
+    }
+
+    private fun onBackArrowClick() {
+        hideKeyboard()
         findNavController().navigate(NewQuestionDirections.actionNewQuestionToAllQuestions(categoryName))
     }
 
