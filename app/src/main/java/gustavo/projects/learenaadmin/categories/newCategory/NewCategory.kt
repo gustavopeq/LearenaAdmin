@@ -3,10 +3,8 @@ package gustavo.projects.learenaadmin.categories.newCategory
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -51,18 +49,13 @@ class NewCategory : Fragment(), IKeyboardUtil, INewCategoryForm {
 
         viewModel = ViewModelProvider(this).get(NewCategoryViewModel::class.java)
 
-        binding.createBtn.setOnClickListener{
-            if(validateFields()) {
-                onCreateNewCategory()
-            }
-            hideKeyboard()
-        }
-
         setOnClickStarListeners()
 
         setViewModelObservers()
 
         setTextFieldListeners()
+
+        setHasOptionsMenu(true)
 
         return binding.root
     }
@@ -79,7 +72,6 @@ class NewCategory : Fragment(), IKeyboardUtil, INewCategoryForm {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.createBtn.isEnabled = !s.isNullOrBlank()
                 binding.newCategoryNameTextField.error = null
             }
         })
@@ -121,6 +113,11 @@ class NewCategory : Fragment(), IKeyboardUtil, INewCategoryForm {
     }
 
     private fun validateFields() : Boolean {
+        if (binding.newCategoryNameTextField.editText?.text.isNullOrEmpty()){
+            binding.newCategoryNameTextField.error = "Please enter a category name"
+            return false
+        }
+
         if(binding.newCategoryDescription.editText?.text.isNullOrEmpty()) {
             binding.newCategoryDescription.error = "Please enter a description"
             return false
@@ -145,6 +142,30 @@ class NewCategory : Fragment(), IKeyboardUtil, INewCategoryForm {
 
     private fun nameAlreadyExistsError() {
         binding.newCategoryNameTextField.error = "You already have a category with this name"
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.new_category_save, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.newCategorySaveIcon -> onSaveIconClick()
+            android.R.id.home -> onBackArrowClick()
+        }
+        return true
+    }
+
+    private fun onSaveIconClick() {
+        if(validateFields()) {
+            onCreateNewCategory()
+        }
+        hideKeyboard()
+    }
+
+    private fun onBackArrowClick() {
+        findNavController().navigate(NewCategoryDirections.actionNewCategoryToCategories())
     }
 
 }
