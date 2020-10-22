@@ -12,12 +12,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
 import gustavo.projects.learenaadmin.BasicDialogWindow
+import gustavo.projects.learenaadmin.IKeyboardUtil
 
 import gustavo.projects.learenaadmin.R
 import gustavo.projects.learenaadmin.databinding.QuestionDetailsFragmentBinding
 import gustavo.projects.learenaadmin.questions.newQuestion.IQuestionForm
 
-class QuestionDetails : Fragment(), IQuestionForm, BasicDialogWindow {
+class QuestionDetails : Fragment(), IQuestionForm, BasicDialogWindow, IKeyboardUtil {
 
     private lateinit var viewModel: QuestionDetailsViewModel
     private lateinit var binding: QuestionDetailsFragmentBinding
@@ -79,12 +80,6 @@ class QuestionDetails : Fragment(), IQuestionForm, BasicDialogWindow {
             fillAnswerTextFields(listOfAnswers)
         })
 
-        binding.saveBtn.setOnClickListener {
-            if(validateAllParameters(this.requireActivity())) {
-                onUpdateQuestion()
-            }
-        }
-
         viewModel.onQuestionUpdatedSuccessfully.observe(viewLifecycleOwner, Observer {
             if(it) confirmQuestionUpdated()
         })
@@ -100,13 +95,14 @@ class QuestionDetails : Fragment(), IQuestionForm, BasicDialogWindow {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
 
-        inflater.inflate(R.menu.delete_question,menu)
+        inflater.inflate(R.menu.question_detail_menu,menu)
 
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
+            R.id.questionDetailSaveIcon -> onSaveIconClick()
             R.id.deleteQuestionIcon -> onCreateDialog(requireActivity(),"Are you sure you want to delete this question?", "Delete", "Cancel")
             android.R.id.home -> onBackArrowClick()
         }
@@ -174,6 +170,13 @@ class QuestionDetails : Fragment(), IQuestionForm, BasicDialogWindow {
 
     private fun onBackArrowClick() {
         findNavController().navigate(QuestionDetailsDirections.actionQuestionDetailsToAllQuestions(categoryName))
+    }
+
+    private fun onSaveIconClick() {
+        if(validateAllParameters(this.requireActivity())) {
+            onUpdateQuestion()
+        }
+        hideKeyboard()
     }
 
 }

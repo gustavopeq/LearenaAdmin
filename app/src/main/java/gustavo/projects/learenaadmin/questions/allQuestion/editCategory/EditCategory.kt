@@ -63,10 +63,6 @@ class EditCategory : Fragment(), INewCategoryForm, IKeyboardUtil {
             starLevel = it
         })
 
-        binding.editCategorySaveBtn.setOnClickListener {
-            validateFields()
-        }
-
         viewModel.categoryAlreadyExists.observe(viewLifecycleOwner, Observer {
             nameAlreadyExistsError()
         })

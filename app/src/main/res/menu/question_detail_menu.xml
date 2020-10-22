@@ -5,6 +5,11 @@
     <item android:id="@+id/deleteQuestionIcon"
         android:icon="@drawable/ic_delete_white_24dp"
         android:title="DeleteIcon"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
+
+    <item android:id="@+id/questionDetailSaveIcon"
+        android:icon="@drawable/ic_done_white_24dp"
+        android:title="Save"
+        app:showAsAction= "always" />
 
 </menu>
