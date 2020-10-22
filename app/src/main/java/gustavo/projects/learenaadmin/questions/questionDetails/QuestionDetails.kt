@@ -103,10 +103,15 @@ class QuestionDetails : Fragment(), IQuestionForm, BasicDialogWindow, IKeyboardU
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.questionDetailSaveIcon -> onSaveIconClick()
-            R.id.deleteQuestionIcon -> onCreateDialog(requireActivity(),"Are you sure you want to delete this question?", "Delete", "Cancel")
+            R.id.deleteQuestionIcon -> onDeleteQuestionIconClick()
             android.R.id.home -> onBackArrowClick()
         }
         return true
+    }
+
+    private fun onDeleteQuestionIconClick() {
+        hideKeyboard()
+        onCreateDialog(requireActivity(),"Are you sure you want to delete this question?", "Delete", "Cancel")
     }
 
     override fun onDialogPositiveBtn() {
@@ -169,6 +174,7 @@ class QuestionDetails : Fragment(), IQuestionForm, BasicDialogWindow, IKeyboardU
     }
 
     private fun onBackArrowClick() {
+        hideKeyboard()
         findNavController().navigate(QuestionDetailsDirections.actionQuestionDetailsToAllQuestions(categoryName))
     }
 

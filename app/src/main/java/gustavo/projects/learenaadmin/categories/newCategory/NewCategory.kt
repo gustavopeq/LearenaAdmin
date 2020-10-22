@@ -165,6 +165,7 @@ class NewCategory : Fragment(), IKeyboardUtil, INewCategoryForm {
     }
 
     private fun onBackArrowClick() {
+        hideKeyboard()
         findNavController().navigate(NewCategoryDirections.actionNewCategoryToCategories())
     }
 

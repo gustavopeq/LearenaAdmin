@@ -116,6 +116,7 @@ class EditCategory : Fragment(), INewCategoryForm, IKeyboardUtil {
     }
 
     private fun onBackArrowClick() {
+        hideKeyboard()
         findNavController().navigate(EditCategoryDirections.actionEditCategoryToAllQuestions(viewModel.categoryName))
     }
 
