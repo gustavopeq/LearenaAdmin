@@ -1,10 +1,8 @@
 package gustavo.projects.learenaadmin.signup
 
 import android.os.Bundle
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -17,7 +15,7 @@ import gustavo.projects.learenaadmin.databinding.SignupFragmentBinding
 class SignupFragment : Fragment() {
 
     companion object {
-        private val MIN_PASSWORD_LENGTH = 6
+        private const val MIN_PASSWORD_LENGTH = 6
     }
 
     private lateinit var binding: SignupFragmentBinding
@@ -27,6 +25,7 @@ class SignupFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         binding = DataBindingUtil.inflate(inflater, R.layout.signup_fragment, container, false)
 
         viewModel = ViewModelProvider(this).get(SignupViewModel::class.java)
@@ -41,15 +40,60 @@ class SignupFragment : Fragment() {
     }
 
     private fun validateCreateAccountForm() {
-        if( !binding.passwordEditText.text.isNullOrBlank() && binding.passwordEditText.text.length >= MIN_PASSWORD_LENGTH
-            && binding.passwordEditText.text.toString() == binding.confirmPwEditText.text.toString()
-            && !binding.emailEditText.text.isNullOrBlank() && binding.emailEditText.text.contains("@", true)
-            && !binding.firstNameEditText.text.isNullOrBlank() && !binding.lastNameEditText.text.isNullOrBlank()
-        ) {
-            viewModel.createUser(binding.firstNameEditText.text.toString(), binding.emailEditText.text.toString(), binding.passwordEditText.text.toString())
-        }else{
-            Toast.makeText(context, "Incorrect or missing field!", Toast.LENGTH_LONG).show()
+
+        resetFieldsErrors()
+
+        var isValid = true
+
+        if (binding.emailEditText.editText!!.text.isNullOrBlank()) {
+            binding.emailEditText.error = " "
+            isValid = false
+        } else if (!binding.emailEditText.editText!!.text.contains("@", true)) {
+            binding.emailEditText.error = "Invalid Email"
+            isValid = false
         }
+
+        if (binding.passwordEditText.editText!!.text.toString() != binding.confirmPwEditText.editText!!.text.toString()) {
+            binding.confirmPwEditText.error = "Password does not match"
+            isValid = false
+        }
+
+        if (binding.firstNameEditText.editText!!.text.isNullOrBlank()) {
+            binding.firstNameEditText.error = " "
+            isValid = false
+        }
+
+        if (binding.lastNameEditText.editText!!.text.isNullOrBlank()) {
+            binding.lastNameEditText.error = " "
+            isValid = false
+        }
+
+        when {
+            binding.passwordEditText.editText!!.text.isNullOrBlank() -> {
+                binding.passwordEditText.error = " "
+                isValid = false
+            }
+            binding.confirmPwEditText.editText!!.text.isNullOrBlank() -> {
+                binding.confirmPwEditText.error = " "
+                isValid = false
+            }
+            binding.passwordEditText.editText!!.text.length < MIN_PASSWORD_LENGTH -> {
+                binding.passwordEditText.error = "Password too short"
+                isValid = false
+            }
+        }
+
+        if (isValid) {
+            viewModel.createUser(binding.firstNameEditText.editText!!.text.toString(), binding.emailEditText.editText!!.text.toString(), binding.passwordEditText.editText!!.text.toString())
+        }
+    }
+
+    private fun resetFieldsErrors() {
+        binding.firstNameEditText.error = null
+        binding.lastNameEditText.error = null
+        binding.emailEditText.error = null
+        binding.passwordEditText.error = null
+        binding.confirmPwEditText.error = null
     }
 
     private fun userCreationSuccess() {

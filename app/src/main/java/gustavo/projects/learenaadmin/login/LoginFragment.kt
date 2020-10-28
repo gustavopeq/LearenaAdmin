@@ -100,7 +100,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun navigateToSignupScreen() {
-        findNavController().navigate(R.id.action_loginFragment_to_signupFragment)
+        findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToSignupFragment())
     }
 
     private fun resetInputFieldErrors() {
