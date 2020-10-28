@@ -44,6 +44,7 @@ class SignupFragment : Fragment(), BasicDialogWindow {
     }
 
     private fun validateCreateAccountForm() {
+        binding.signupLoadingIcon.visibility = View.VISIBLE
 
         resetFieldsErrors()
 
@@ -89,6 +90,8 @@ class SignupFragment : Fragment(), BasicDialogWindow {
 
         if (isValid) {
             viewModel.createUser(binding.firstNameEditText.editText!!.text.toString(), binding.emailEditText.editText!!.text.toString(), binding.passwordEditText.editText!!.text.toString())
+        }else {
+            binding.signupLoadingIcon.visibility = View.GONE
         }
     }
 
@@ -101,11 +104,14 @@ class SignupFragment : Fragment(), BasicDialogWindow {
     }
 
     private fun userCreationSuccess() {
+        binding.signupLoadingIcon.visibility = View.GONE
         onCreateDialog(this.requireActivity(), "Your account was created!\nWe sent a confirmation email to you.", "Ok", "")
     }
 
     private fun userCreationFailed() {
-        Toast.makeText(context, "New user couldn't be created...", Toast.LENGTH_LONG).show()
+        binding.emailEditText.error = "This email is already registered"
+        binding.signupLoadingIcon.visibility = View.GONE
+        Toast.makeText(context, "New user couldn't be created...", Toast.LENGTH_SHORT).show()
     }
 
     override fun onDialogPositiveBtn() {

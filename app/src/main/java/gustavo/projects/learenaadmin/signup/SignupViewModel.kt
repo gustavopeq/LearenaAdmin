@@ -48,10 +48,6 @@ class SignupViewModel : ViewModel() {
             }
     }
 
-
-
-
-
     private fun sendConfirmationEmail() {
         user.sendEmailVerification()
             .addOnCompleteListener { task ->
