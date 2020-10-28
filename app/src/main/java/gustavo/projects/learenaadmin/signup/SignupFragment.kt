@@ -1,5 +1,6 @@
 package gustavo.projects.learenaadmin.signup
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -8,11 +9,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import gustavo.projects.learenaadmin.BasicDialogWindow
 
 import gustavo.projects.learenaadmin.R
 import gustavo.projects.learenaadmin.databinding.SignupFragmentBinding
 
-class SignupFragment : Fragment() {
+class SignupFragment : Fragment(), BasicDialogWindow {
 
     companion object {
         private const val MIN_PASSWORD_LENGTH = 6
@@ -97,12 +99,19 @@ class SignupFragment : Fragment() {
     }
 
     private fun userCreationSuccess() {
-        Toast.makeText(context, "New user created!", Toast.LENGTH_LONG).show()
-        findNavController().navigate(R.id.action_signupFragment_to_loginFragment)
+        onCreateDialog(this.requireActivity(), "Your account was created!\nWe sent a confirmation email to you.", "Ok", "")
     }
 
     private fun userCreationFailed() {
         Toast.makeText(context, "New user couldn't be created...", Toast.LENGTH_LONG).show()
+    }
+
+    override fun onDialogPositiveBtn() {
+        findNavController().navigate(R.id.action_signupFragment_to_loginFragment)
+    }
+
+    override fun onDialogNegativeBtn() {
+        // No negative btn
     }
 
 }

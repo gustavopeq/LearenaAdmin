@@ -20,7 +20,7 @@ interface BasicDialogWindow {
             }
         }
 
-        builder.show()
+        builder.show().setCanceledOnTouchOutside(false)
     }
 
     fun onDialogPositiveBtn()
