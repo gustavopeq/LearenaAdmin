@@ -33,7 +33,8 @@ class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdap
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        (activity as MainActivity).supportActionBar?.show()
+        (activity as MainActivity).showActionBar()
+
         binding = DataBindingUtil.inflate(inflater,
             R.layout.categories_fragment, container, false)
 

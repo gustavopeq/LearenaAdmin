@@ -20,8 +20,8 @@
     <fragment
         android:id="@+id/signupFragment"
         android:name="gustavo.projects.learenaadmin.signup.SignupFragment"
-        android:label="signup_fragment"
-        tools:layout="@layout/signup_fragment" >
+        android:label=" "
+        tools:layout="@layout/signup_fragment">
         <action
             android:id="@+id/action_signupFragment_to_loginFragment"
             app:destination="@id/loginFragment" />

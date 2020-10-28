@@ -23,4 +23,8 @@ class MainActivity : AppCompatActivity() {
     fun setActionBarTitle(title:String){
         supportActionBar?.title = title
     }
+
+    fun showActionBar() {
+        supportActionBar?.show()
+    }
 }

@@ -1,6 +1,5 @@
 package gustavo.projects.learenaadmin.signup
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
@@ -10,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import gustavo.projects.learenaadmin.BasicDialogWindow
+import gustavo.projects.learenaadmin.MainActivity
 
 import gustavo.projects.learenaadmin.R
 import gustavo.projects.learenaadmin.databinding.SignupFragmentBinding
@@ -27,6 +27,8 @@ class SignupFragment : Fragment(), BasicDialogWindow {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        (activity as MainActivity).showActionBar()
 
         binding = DataBindingUtil.inflate(inflater, R.layout.signup_fragment, container, false)
 
