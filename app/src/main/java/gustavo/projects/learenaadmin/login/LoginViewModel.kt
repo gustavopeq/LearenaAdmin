@@ -27,6 +27,9 @@ class LoginViewModel : ViewModel() {
         get() = _loginNotVerified
 
     fun signIn(email: String, password: String) {
+        onResetLoginFailed()
+        onResetLoginNotVerified()
+
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener() { task ->
                 if (task.isSuccessful) {
@@ -49,5 +52,13 @@ class LoginViewModel : ViewModel() {
 
     fun onResetLoginSuccessful() {
         _loginSuccessful.value = false
+    }
+
+    private fun onResetLoginFailed() {
+        _loginNotVerified.value = false
+    }
+
+    private fun onResetLoginNotVerified() {
+        _loginFailed.value = false
     }
 }
