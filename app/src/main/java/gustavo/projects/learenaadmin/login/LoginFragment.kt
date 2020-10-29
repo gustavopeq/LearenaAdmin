@@ -86,6 +86,12 @@ class LoginFragment : Fragment() {
             }
         })
 
+        viewModel.loginNotVerified.observe(viewLifecycleOwner, Observer {
+            if(it) {
+                onEmailNotVerifiedFeedback()
+            }
+        })
+
         return binding.root
     }
 
@@ -111,6 +117,10 @@ class LoginFragment : Fragment() {
     private fun onLoginFailedFeedback() {
         binding.emailEditText.error = " "
         binding.passwordEditText.error = "Email or password incorrect"
+    }
+
+    private fun onEmailNotVerifiedFeedback() {
+        binding.emailEditText.error = "Please, verify your email first!"
     }
 
 }

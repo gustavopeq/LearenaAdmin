@@ -22,6 +22,10 @@ class LoginViewModel : ViewModel() {
     val loginFailed: LiveData<Boolean>
         get() = _loginFailed
 
+    private val _loginNotVerified = MutableLiveData<Boolean>()
+    val loginNotVerified: LiveData<Boolean>
+        get() = _loginNotVerified
+
     fun signIn(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener() { task ->
@@ -30,6 +34,7 @@ class LoginViewModel : ViewModel() {
                     user = auth.currentUser!!
                     if(!user.isEmailVerified){
                         Log.d("print", "Please, verify your email first!")
+                        _loginNotVerified.value = true
                     }else {
                         Log.d("print", "Login successful")
                         _loginSuccessful.value = true
