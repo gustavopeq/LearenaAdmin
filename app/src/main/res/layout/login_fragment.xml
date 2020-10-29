@@ -99,6 +99,17 @@
                 app:layout_constraintStart_toStartOf="@+id/signinBtn"
                 app:layout_constraintTop_toBottomOf="@+id/signinBtn" />
 
+            <ProgressBar
+                android:id="@+id/loginLoadingIcon"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@+id/newAccountBtn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/signinBtn" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>

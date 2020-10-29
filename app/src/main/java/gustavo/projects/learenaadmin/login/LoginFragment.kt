@@ -97,6 +97,7 @@ class LoginFragment : Fragment() {
 
     private fun onSignBtnClick() {
         resetInputFieldErrors()
+        binding.loginLoadingIcon.visibility = View.VISIBLE
         viewModel.signIn(binding.emailEditText.editText?.text.toString(), binding.passwordEditText.editText?.text.toString())
     }
 
@@ -117,10 +118,12 @@ class LoginFragment : Fragment() {
     private fun onLoginFailedFeedback() {
         binding.emailEditText.error = " "
         binding.passwordEditText.error = "Email or password incorrect"
+        binding.loginLoadingIcon.visibility = View.GONE
     }
 
     private fun onEmailNotVerifiedFeedback() {
         binding.emailEditText.error = "Please, verify your email first!"
+        binding.loginLoadingIcon.visibility = View.GONE
     }
 
 }
