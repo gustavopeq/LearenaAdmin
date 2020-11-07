@@ -8,5 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlActivated">@color/correctAnswer</item>
         <item name="colorSwitchThumbNormal">@color/wrongAnswer</item>
+        <item name="android:fontFamily">sans-serif</item>
     </style>
+
 </resources>
