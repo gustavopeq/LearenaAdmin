@@ -11,6 +11,7 @@
         <item name="colorControlActivated">@color/correctAnswer</item>
         <item name="colorSwitchThumbNormal">@color/wrongAnswer</item>
         <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textColor">@color/defaultText</item>
     </style>
 
 </resources>

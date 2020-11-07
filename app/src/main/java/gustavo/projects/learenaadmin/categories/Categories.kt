@@ -52,8 +52,10 @@ class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdap
         })
 
         viewModel.noCategoryFound.observe(viewLifecycleOwner, Observer {
-            binding.categoryLoadingIcon.visibility = View.GONE
-            binding.noCategoryCreatedTextView.visibility = View.VISIBLE
+            if (it) {
+                binding.categoryLoadingIcon.visibility = View.GONE
+                binding.noCategoryCreatedTextView.visibility = View.VISIBLE
+            }
         })
 
         viewModel.itemRemovedSuccessfully.observe(viewLifecycleOwner, Observer { itemRemovedSuccessfully ->
