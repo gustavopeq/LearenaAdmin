@@ -62,11 +62,11 @@ interface INewCategoryForm {
     }
 
     private fun selectStarImg(starSelected: ImageView) {
-        starSelected.setImageResource(R.drawable.ic_star_black_24dp)
+        starSelected.setImageResource(R.drawable.ic_star_24dp)
     }
 
     private fun unselectStarImg(starUnselected: ImageView) {
-        starUnselected.setImageResource(R.drawable.ic_star_border_black_24dp)
+        starUnselected.setImageResource(R.drawable.ic_star_border_24dp)
     }
 
 

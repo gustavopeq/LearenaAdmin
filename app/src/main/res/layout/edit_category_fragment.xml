@@ -73,7 +73,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/starImg3"
             app:layout_constraintStart_toEndOf="@+id/difficultLevelTextView"
             app:layout_constraintTop_toTopOf="@+id/starImg3"
-            app:srcCompat="@drawable/ic_star_black_24dp" />
+            app:srcCompat="@drawable/ic_star_24dp" />
 
         <ImageView
             android:id="@+id/starImg2"
@@ -83,7 +83,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/starImg3"
             app:layout_constraintStart_toEndOf="@+id/starImg1"
             app:layout_constraintTop_toTopOf="@+id/starImg3"
-            app:srcCompat="@drawable/ic_star_border_black_24dp" />
+            app:srcCompat="@drawable/ic_star_border_24dp" />
 
         <ImageView
             android:id="@+id/starImg3"
@@ -94,7 +94,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/difficultLevelTextView"
             app:layout_constraintStart_toEndOf="@+id/starImg2"
             app:layout_constraintTop_toTopOf="@+id/difficultLevelTextView"
-            app:srcCompat="@drawable/ic_star_border_black_24dp" />
+            app:srcCompat="@drawable/ic_star_border_24dp" />
 
         <ImageView
             android:id="@+id/starImg4"
@@ -104,7 +104,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/starImg3"
             app:layout_constraintStart_toEndOf="@+id/starImg3"
             app:layout_constraintTop_toTopOf="@+id/starImg3"
-            app:srcCompat="@drawable/ic_star_border_black_24dp" />
+            app:srcCompat="@drawable/ic_star_border_24dp" />
 
         <ImageView
             android:id="@+id/starImg5"
@@ -114,7 +114,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/starImg3"
             app:layout_constraintStart_toEndOf="@+id/starImg4"
             app:layout_constraintTop_toTopOf="@+id/starImg3"
-            app:srcCompat="@drawable/ic_star_border_black_24dp" />
+            app:srcCompat="@drawable/ic_star_border_24dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
