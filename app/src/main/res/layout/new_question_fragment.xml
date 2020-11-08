@@ -30,12 +30,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0">>
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textInputEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="100"
-                android:maxLines="3" />
+                android:maxLines="3"
+                android:singleLine="true" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -60,7 +62,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="50"
-                android:maxLines="2" />
+                android:maxLines="2"
+                android:singleLine="true" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -86,7 +89,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="50"
-                android:maxLines="2" />
+                android:maxLines="2"
+                android:singleLine="true" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -110,7 +114,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="50"
-                android:maxLines="2" />
+                android:maxLines="2"
+                android:singleLine="true" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -134,7 +139,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="50"
-                android:maxLines="2" />
+                android:maxLines="2"
+                android:singleLine="true" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

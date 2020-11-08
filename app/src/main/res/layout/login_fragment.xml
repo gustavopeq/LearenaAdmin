@@ -52,6 +52,7 @@
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:singleLine="true"
                     android:text="gustavo_pequeno2@hotmail.com" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -71,6 +72,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
+                    android:singleLine="true"
                     android:text="123456" />
 
             </com.google.android.material.textfield.TextInputLayout>
