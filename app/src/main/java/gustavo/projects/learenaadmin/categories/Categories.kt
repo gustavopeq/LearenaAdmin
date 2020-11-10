@@ -1,7 +1,6 @@
 package gustavo.projects.learenaadmin.categories
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.ImageView
@@ -49,6 +48,7 @@ class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdap
         viewModel.listOfCategoryItem.observe(viewLifecycleOwner, Observer {
             adapter.submitCategoryItemList(it)
             binding.categoryLoadingIcon.visibility = View.GONE
+            checkForNoneCategoryCreated()
         })
 
         viewModel.noCategoryFound.observe(viewLifecycleOwner, Observer {
@@ -121,6 +121,7 @@ class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdap
 
     private fun deleteCategoryItem() {
         viewModel.deleteCategoryFromDatabase(categoryNameToDelete)
+        checkForNoneCategoryCreated()
     }
 
     private fun resetItemRemovedFlag() {
@@ -149,5 +150,11 @@ class Categories : Fragment(), CategoryAdapter.OnItemClickListener, CategoryAdap
 
     override fun onDialogNegativeBtn() {
         findNavController().navigate(CategoriesDirections.actionCategoriesToLoginFragment())
+    }
+
+    private fun checkForNoneCategoryCreated() {
+        if (viewModel.quantityOfCategories() == 0) {
+            binding.noCategoryCreatedTextView.visibility = View.VISIBLE
+        }
     }
 }

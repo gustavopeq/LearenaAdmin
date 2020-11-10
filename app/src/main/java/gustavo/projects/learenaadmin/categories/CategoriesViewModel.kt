@@ -100,5 +100,9 @@ class CategoriesViewModel : ViewModel() {
         _itemRemovedSuccessfully.value = false
     }
 
+    fun quantityOfCategories(): Int {
+        return arrayOfCategories.size
+    }
+
 
 }
