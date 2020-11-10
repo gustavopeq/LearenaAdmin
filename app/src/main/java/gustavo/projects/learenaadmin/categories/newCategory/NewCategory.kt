@@ -129,6 +129,8 @@ class NewCategory : Fragment(), IKeyboardUtil, INewCategoryForm {
         val categoryName = binding.newCategoryNameTextField.editText?.text.toString()
         val categoryDescription = binding.newCategoryDescription.editText?.text.toString()
         viewModel.addNewCategoryToDatabase(categoryName, categoryDescription, starLevel)
+
+        binding.newCategoryLoadingIcon.visibility = View.VISIBLE
     }
 
     private fun returnToCategoryScreen() {
@@ -142,6 +144,8 @@ class NewCategory : Fragment(), IKeyboardUtil, INewCategoryForm {
 
     private fun nameAlreadyExistsError() {
         binding.newCategoryNameTextField.error = "You already have a category with this name"
+
+        binding.newCategoryLoadingIcon.visibility = View.GONE
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
