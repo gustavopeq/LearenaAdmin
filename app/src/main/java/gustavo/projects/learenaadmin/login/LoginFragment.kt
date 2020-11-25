@@ -51,7 +51,7 @@ class LoginFragment : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.signinBtn.isEnabled = !s.isNullOrBlank()
+                binding.signinBtn.isEnabled = !s.isNullOrBlank() && binding.passwordEditText.editText?.text?.count()!! >= 6
             }
         })
 

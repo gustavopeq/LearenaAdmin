@@ -30,6 +30,12 @@ class LoginViewModel : ViewModel() {
         onResetLoginFailed()
         onResetLoginNotVerified()
 
+        if(email.isNullOrBlank() || password.isNullOrBlank()) {
+            Log.d("print", "Login failed")
+            _loginFailed.value = true
+            return
+        }
+
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener() { task ->
                 if (task.isSuccessful) {
