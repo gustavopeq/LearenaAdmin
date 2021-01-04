@@ -8,13 +8,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import gustavo.projects.learenaadmin.BasicDialogWindow
+import gustavo.projects.learenaadmin.INetworkCheck
 import gustavo.projects.learenaadmin.MainActivity
 
 import gustavo.projects.learenaadmin.R
 import gustavo.projects.learenaadmin.databinding.SignupFragmentBinding
 
-class SignupFragment : Fragment(), BasicDialogWindow {
+class SignupFragment : Fragment(), BasicDialogWindow, INetworkCheck {
 
     companion object {
         private const val MIN_PASSWORD_LENGTH = 6
@@ -46,51 +48,60 @@ class SignupFragment : Fragment(), BasicDialogWindow {
     private fun validateCreateAccountForm() {
         binding.signupLoadingIcon.visibility = View.VISIBLE
 
-        resetFieldsErrors()
+        if(isNetworkAvailable(requireContext())) {
+            resetFieldsErrors()
 
-        var isValid = true
+            var isValid = true
 
-        if (binding.emailEditText.editText!!.text.isNullOrBlank()) {
-            binding.emailEditText.error = " "
-            isValid = false
-        } else if (!binding.emailEditText.editText!!.text.contains("@", true)) {
-            binding.emailEditText.error = "Invalid Email"
-            isValid = false
-        }
-
-        if (binding.passwordEditText.editText!!.text.toString() != binding.confirmPwEditText.editText!!.text.toString()) {
-            binding.confirmPwEditText.error = "Password does not match"
-            isValid = false
-        }
-
-        if (binding.firstNameEditText.editText!!.text.isNullOrBlank()) {
-            binding.firstNameEditText.error = " "
-            isValid = false
-        }
-
-        if (binding.lastNameEditText.editText!!.text.isNullOrBlank()) {
-            binding.lastNameEditText.error = " "
-            isValid = false
-        }
-
-        when {
-            binding.passwordEditText.editText!!.text.isNullOrBlank() -> {
-                binding.passwordEditText.error = " "
+            if (binding.emailEditText.editText!!.text.isNullOrBlank()) {
+                binding.emailEditText.error = " "
+                isValid = false
+            } else if (!binding.emailEditText.editText!!.text.contains("@", true)) {
+                binding.emailEditText.error = "Invalid Email"
                 isValid = false
             }
-            binding.confirmPwEditText.editText!!.text.isNullOrBlank() -> {
-                binding.confirmPwEditText.error = " "
-                isValid = false
-            }
-            binding.passwordEditText.editText!!.text.length < MIN_PASSWORD_LENGTH -> {
-                binding.passwordEditText.error = "Password too short"
-                isValid = false
-            }
-        }
 
-        if (isValid) {
-            viewModel.createUser(binding.firstNameEditText.editText!!.text.toString(), binding.emailEditText.editText!!.text.toString(), binding.passwordEditText.editText!!.text.toString())
+            if (binding.passwordEditText.editText!!.text.toString() != binding.confirmPwEditText.editText!!.text.toString()) {
+                binding.confirmPwEditText.error = "Password does not match"
+                isValid = false
+            }
+
+            if (binding.firstNameEditText.editText!!.text.isNullOrBlank()) {
+                binding.firstNameEditText.error = " "
+                isValid = false
+            }
+
+            if (binding.lastNameEditText.editText!!.text.isNullOrBlank()) {
+                binding.lastNameEditText.error = " "
+                isValid = false
+            }
+
+            when {
+                binding.passwordEditText.editText!!.text.isNullOrBlank() -> {
+                    binding.passwordEditText.error = " "
+                    isValid = false
+                }
+                binding.confirmPwEditText.editText!!.text.isNullOrBlank() -> {
+                    binding.confirmPwEditText.error = " "
+                    isValid = false
+                }
+                binding.passwordEditText.editText!!.text.length < MIN_PASSWORD_LENGTH -> {
+                    binding.passwordEditText.error = "Password too short"
+                    isValid = false
+                }
+            }
+
+            if (isValid) {
+                viewModel.createUser(
+                    binding.firstNameEditText.editText!!.text.toString(),
+                    binding.emailEditText.editText!!.text.toString(),
+                    binding.passwordEditText.editText!!.text.toString()
+                )
+            } else {
+                binding.signupLoadingIcon.visibility = View.GONE
+            }
         }else {
+            Snackbar.make(requireView(), "No Internet connection", 3000).show()
             binding.signupLoadingIcon.visibility = View.GONE
         }
     }
