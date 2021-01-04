@@ -1,22 +1,27 @@
 package gustavo.projects.learenaadmin.login
 
+
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
+import gustavo.projects.learenaadmin.INetworkCheck
 import gustavo.projects.learenaadmin.MainActivity
 import gustavo.projects.learenaadmin.R
 import gustavo.projects.learenaadmin.databinding.LoginFragmentBinding
 
 
-class LoginFragment : Fragment() {
+class LoginFragment : Fragment(), INetworkCheck {
 
     private lateinit var binding: LoginFragmentBinding
     private lateinit var viewModel: LoginViewModel
@@ -51,7 +56,8 @@ class LoginFragment : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.signinBtn.isEnabled = !s.isNullOrBlank() && binding.passwordEditText.editText?.text?.count()!! >= 6
+                binding.signinBtn.isEnabled =
+                    !s.isNullOrBlank() && binding.passwordEditText.editText?.text?.count()!! >= 6
             }
         })
 
@@ -66,7 +72,8 @@ class LoginFragment : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.signinBtn.isEnabled = s?.count()!! >= 6 && !binding.emailEditText.editText?.text.isNullOrBlank()
+                binding.signinBtn.isEnabled =
+                    s?.count()!! >= 6 && !binding.emailEditText.editText?.text.isNullOrBlank()
             }
         })
 
@@ -76,8 +83,8 @@ class LoginFragment : Fragment() {
 
         binding.newAccountBtn.setOnClickListener { navigateToSignupScreen() }
 
-        viewModel.loginSuccessful.observe(viewLifecycleOwner, Observer{loginSuccessful ->
-            if(loginSuccessful) loadCategoriesFragment()
+        viewModel.loginSuccessful.observe(viewLifecycleOwner, Observer { loginSuccessful ->
+            if (loginSuccessful) loadCategoriesFragment()
         })
 
         viewModel.loginFailed.observe(viewLifecycleOwner, Observer {
@@ -87,7 +94,7 @@ class LoginFragment : Fragment() {
         })
 
         viewModel.loginNotVerified.observe(viewLifecycleOwner, Observer {
-            if(it) {
+            if (it) {
                 onEmailNotVerifiedFeedback()
             }
         })
@@ -98,7 +105,15 @@ class LoginFragment : Fragment() {
     private fun onSignBtnClick() {
         resetInputFieldErrors()
         binding.loginLoadingIcon.visibility = View.VISIBLE
-        viewModel.signIn(binding.emailEditText.editText?.text.toString(), binding.passwordEditText.editText?.text.toString())
+        if(isNetworkAvailable(requireContext())) {
+            viewModel.signIn(
+                binding.emailEditText.editText?.text.toString(),
+                binding.passwordEditText.editText?.text.toString()
+            )
+        }else {
+            Snackbar.make(requireView(), "No Internet connection", 3000).show()
+            binding.loginLoadingIcon.visibility = View.GONE
+        }
     }
 
     private fun loadCategoriesFragment() {
@@ -125,5 +140,7 @@ class LoginFragment : Fragment() {
         binding.emailEditText.error = "Please, verify your email first!"
         binding.loginLoadingIcon.visibility = View.GONE
     }
+
+
 
 }
