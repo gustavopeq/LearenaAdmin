@@ -9,13 +9,15 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
 import gustavo.projects.learenaadmin.IKeyboardUtil
+import gustavo.projects.learenaadmin.INetworkCheck
 
 import gustavo.projects.learenaadmin.R
 import gustavo.projects.learenaadmin.databinding.NewQuestionFragmentBinding
 
-class NewQuestion : Fragment(), IQuestionForm, IKeyboardUtil {
+class NewQuestion : Fragment(), IQuestionForm, IKeyboardUtil, INetworkCheck {
 
     private lateinit var viewModel: NewQuestionViewModel
     private lateinit var binding: NewQuestionFragmentBinding
@@ -81,20 +83,24 @@ class NewQuestion : Fragment(), IQuestionForm, IKeyboardUtil {
     }
 
     private fun onCreateNewQuestion(){
-        val question = newQuestionTextInput.editText?.text.toString()
-        val answers = arrayListOf<String>()
-        answers.add(answer1TextField.editText?.text.toString())
-        answers.add(answer2TextField.editText?.text.toString())
-        if(!answer3TextField.editText?.text.isNullOrEmpty()) {
-            answers.add(answer3TextField.editText?.text.toString())
-        }
-        if(!answer4TextField.editText?.text.isNullOrEmpty()) {
-            answers.add(answer4TextField.editText?.text.toString())
-        }
+        if(isNetworkAvailable(requireContext())) {
+            val question = newQuestionTextInput.editText?.text.toString()
+            val answers = arrayListOf<String>()
+            answers.add(answer1TextField.editText?.text.toString())
+            answers.add(answer2TextField.editText?.text.toString())
+            if (!answer3TextField.editText?.text.isNullOrEmpty()) {
+                answers.add(answer3TextField.editText?.text.toString())
+            }
+            if (!answer4TextField.editText?.text.isNullOrEmpty()) {
+                answers.add(answer4TextField.editText?.text.toString())
+            }
 
-        setCorrectAnswerAsFirst(answers)
+            setCorrectAnswerAsFirst(answers)
 
-        viewModel.createMapOfQuestionAndAnswers(question, answers)
+            viewModel.createMapOfQuestionAndAnswers(question, answers)
+        }else {
+            Snackbar.make(requireView(), "No Internet connection", 3000).show()
+        }
     }
 
     // TAKE THE ANSWERS ARRAY, AND PUT THE CORRECT ANSWER IN THE FIRST POSITION
