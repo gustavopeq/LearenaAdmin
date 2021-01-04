@@ -10,12 +10,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 
 import gustavo.projects.learenaadmin.R
 import gustavo.projects.learenaadmin.IKeyboardUtil
+import gustavo.projects.learenaadmin.INetworkCheck
 import gustavo.projects.learenaadmin.databinding.NewCategoryFragmentBinding
 
-class NewCategory : Fragment(), IKeyboardUtil, INewCategoryForm {
+class NewCategory : Fragment(), IKeyboardUtil, INewCategoryForm, INetworkCheck {
 
     override var starImg1: ImageView
         get() = binding.starImg1
@@ -126,11 +128,15 @@ class NewCategory : Fragment(), IKeyboardUtil, INewCategoryForm {
     }
 
     private fun onCreateNewCategory() {
-        val categoryName = binding.newCategoryNameTextField.editText?.text.toString()
-        val categoryDescription = binding.newCategoryDescription.editText?.text.toString()
-        viewModel.addNewCategoryToDatabase(categoryName, categoryDescription, starLevel)
+        if(isNetworkAvailable(requireContext())) {
+            val categoryName = binding.newCategoryNameTextField.editText?.text.toString()
+            val categoryDescription = binding.newCategoryDescription.editText?.text.toString()
+            viewModel.addNewCategoryToDatabase(categoryName, categoryDescription, starLevel)
 
-        binding.newCategoryLoadingIcon.visibility = View.VISIBLE
+            binding.newCategoryLoadingIcon.visibility = View.VISIBLE
+        }else{
+            Snackbar.make(requireView(), "No Internet connection", 3000).show()
+        }
     }
 
     private fun returnToCategoryScreen() {
