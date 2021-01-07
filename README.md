@@ -14,4 +14,4 @@ If you don't have an account created in Learena, you will be able to create one 
 * Recycler views
 * Fragment navigation
 
-[<img align="left" alt="Android" width="40px" src="https://github.com/devicons/devicon/blob/master/icons/android/android-original.svg"/>][github]
+<img align="left" alt="Android" width="40px" src="https://github.com/devicons/devicon/blob/master/icons/android/android-original.svg"/>
