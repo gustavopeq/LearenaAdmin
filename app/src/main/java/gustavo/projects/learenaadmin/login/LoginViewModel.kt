@@ -32,7 +32,7 @@ class LoginViewModel : ViewModel() {
         onResetLoginNotVerified()
 
         if(email.isNullOrBlank() || password.isNullOrBlank()) {
-            Log.d("print", "Login failed")
+            ////Log.d("print", "Login failed")
             _loginFailed.value = true
             return
         }
@@ -43,15 +43,15 @@ class LoginViewModel : ViewModel() {
                     // Sign in success, update UI with the signed-in user's information
                     user = auth.currentUser!!
                     if(!user.isEmailVerified){
-                        Log.d("print", "Please, verify your email first!")
+                        //Log.d("print", "Please, verify your email first!")
                         _loginNotVerified.value = true
                     }else {
-                        Log.d("print", "Login successful")
+                        //Log.d("print", "Login successful")
                         _loginSuccessful.value = true
                     }
                 } else {
                     // If sign in fails, display a message to the user.
-                    Log.d("print", "Login failed")
+                    //Log.d("print", "Login failed")
                     _loginFailed.value = true
                 }
             }

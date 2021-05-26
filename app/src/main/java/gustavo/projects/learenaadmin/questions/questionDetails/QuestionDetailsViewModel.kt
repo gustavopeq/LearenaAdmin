@@ -49,18 +49,18 @@ class QuestionDetailsViewModel(private val categoryName: String, private var que
 
                         if (questions != null) {
                             mapOfQuestions = questions.mapOfQuestions?.toMutableMap()!!
-                            Log.d("print", "DB accessed and questions loaded")
+                            //Log.d("print", "DB accessed and questions loaded")
                             getQuestionsDetails()
                         }
                     } else {
-                        Log.d("print", "This user haven't created any question yet")
+                        //Log.d("print", "This user haven't created any question yet")
                     }
                 }else {
-                    Log.d("print", "This user haven't created any question yet")
+                    //Log.d("print", "This user haven't created any question yet")
                 }
             }
             .addOnFailureListener { exception ->
-                Log.d("print", "Error getting documents.", exception)
+                //Log.d("print", "Error getting documents.", exception)
             }
     }
 
@@ -84,10 +84,10 @@ class QuestionDetailsViewModel(private val categoryName: String, private var que
                 }
                 categoryDocumentRef.set(newQuestionObject, SetOptions.merge())
                 _onQuestionUpdatedSuccessfully.value = true
-                Log.d("print", "Question updated!")
+                //Log.d("print", "Question updated!")
             }
             .addOnFailureListener { exception ->
-                Log.d("print", "Error getting documents.", exception)
+                //Log.d("print", "Error getting documents.", exception)
             }
     }
 
@@ -109,11 +109,11 @@ class QuestionDetailsViewModel(private val categoryName: String, private var que
             .get()
             .addOnSuccessListener {
                 categoryDocumentRef.update("mapOfQuestions.$questionName", FieldValue.delete())
-                Log.d("print", "Question deleted from database!")
+                //Log.d("print", "Question deleted from database!")
                 _onQuestionDeletedSuccessfully.value = true
             }
             .addOnFailureListener { exception ->
-                Log.d("print", "Error getting documents.", exception)
+                //Log.d("print", "Error getting documents.", exception)
             }
     }
 

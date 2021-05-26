@@ -29,11 +29,11 @@ class NewQuestionViewModel(private val categoryName: String) : ViewModel() {
             .get()
             .addOnSuccessListener {
                 categoryDocumentRef.set(newQuestion, SetOptions.merge())
-                Log.d("print", "New question added to the database")
+                //Log.d("print", "New question added to the database")
                 _questionCreatedSuccessfully.value = true
             }
             .addOnFailureListener { exception ->
-                Log.d("print", "Error getting documents.", exception)
+                //Log.d("print", "Error getting documents.", exception)
             }
     }
 

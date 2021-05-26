@@ -50,7 +50,7 @@ class AllQuestionsViewModel(private var categoryName: String) : ViewModel() {
                                 _noQuestionFound.value = false
                                 anyQuestionFound = true
                                 updateRecyclerQuestionsItemList()
-                                Log.d("print", "DB accessed and questions loaded")
+                                //Log.d("print", "DB accessed and questions loaded")
                             }
                         }else if (field == "categoryDescription") {
                             _categoryDescription.value = document.data!![field] as String?
@@ -64,7 +64,7 @@ class AllQuestionsViewModel(private var categoryName: String) : ViewModel() {
                 }
             }
             .addOnFailureListener { exception ->
-                Log.d("print", "Error getting documents.", exception)
+                //Log.d("print", "Error getting documents.", exception)
             }
     }
 

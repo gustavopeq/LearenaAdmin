@@ -46,10 +46,10 @@ class CategoriesViewModel : ViewModel() {
                         _noCategoryFound.value = false
                         anyCategoryFound = true
                         updateRecyclerCategoriesItemList()
-                        Log.d("print", "DB accessed and categories loaded")
+                        //Log.d("print", "DB accessed and categories loaded")
                     }
                 }else{
-                    Log.d("print", "This user haven't created any category yet")
+                    //Log.d("print", "This user haven't created any category yet")
                 }
 
                 if(!anyCategoryFound) {
@@ -57,7 +57,7 @@ class CategoriesViewModel : ViewModel() {
                 }
             }
             .addOnFailureListener { exception ->
-                Log.d("print", "Error getting documents.", exception)
+                //Log.d("print", "Error getting documents.", exception)
             }
     }
 
@@ -78,17 +78,17 @@ class CategoriesViewModel : ViewModel() {
             .addOnSuccessListener { document ->
                 if (document.data!!.isNotEmpty()) {
                     userDocumentRef.update("listOfCategories", FieldValue.arrayRemove(categoryName))
-                    Log.d("print", "The category $categoryName was removed!")
+                    //Log.d("print", "The category $categoryName was removed!")
                     arrayOfCategories.remove(categoryName)
                     deleteDocumentsFromCategory(categoryName)
                     updateRecyclerCategoriesItemList()
                     _itemRemovedSuccessfully.value = true
                 }else{
-                    Log.d("print", "Document empty!")
+                    //Log.d("print", "Document empty!")
                 }
             }
             .addOnFailureListener { exception ->
-                Log.d("print", "Error getting documents.", exception)
+                //Log.d("print", "Error getting documents.", exception)
             }
     }
 

@@ -61,7 +61,7 @@ class EditCategoryViewModel(categoryName: String) : ViewModel() {
                 }
             }
             .addOnFailureListener { exception ->
-                Log.d("print", "Error getting documents.", exception)
+                //Log.d("print", "Error getting documents.", exception)
             }
     }
 
@@ -76,7 +76,7 @@ class EditCategoryViewModel(categoryName: String) : ViewModel() {
                     if (categories != null) {
                         if(categories.listOfCategories?.contains(categoryName)!!) {
                             _categoryAlreadyExists.value = true
-                            Log.d("print", "This category name already exists")
+                            //Log.d("print", "This category name already exists")
                         }else {
                             userDocumentRef.update("listOfCategories", FieldValue.arrayUnion(categoryName))
                             newCategoryName = categoryName
@@ -90,7 +90,7 @@ class EditCategoryViewModel(categoryName: String) : ViewModel() {
                 }
             }
             .addOnFailureListener { exception ->
-                Log.d("print", "Error getting documents.", exception)
+                //Log.d("print", "Error getting documents.", exception)
             }
     }
 
@@ -101,17 +101,17 @@ class EditCategoryViewModel(categoryName: String) : ViewModel() {
             .addOnSuccessListener {
                 val description = hashMapOf("categoryDescription" to categoryDescription)
                 questionDocRef.set(description, SetOptions.merge())
-                Log.d("print", "Category description updated")
+                //Log.d("print", "Category description updated")
                 val starLevel = hashMapOf("starLevel" to categoryStarLevel)
                 questionDocRef.set(starLevel, SetOptions.merge())
-                Log.d("print", "Category star level updated")
+                //Log.d("print", "Category star level updated")
 
                 if (!isChangingName) {
                     _categoryEditedSuccessfully.value = true
                 }
             }
             .addOnFailureListener { exception ->
-                Log.d("print", "Error getting documents.", exception)
+                //Log.d("print", "Error getting documents.", exception)
             }
     }
 
@@ -134,7 +134,7 @@ class EditCategoryViewModel(categoryName: String) : ViewModel() {
                 }
             }
             .addOnFailureListener { exception ->
-                Log.d("print", "Error getting documents.", exception)
+                //Log.d("print", "Error getting documents.", exception)
             }
     }
 
@@ -156,7 +156,7 @@ class EditCategoryViewModel(categoryName: String) : ViewModel() {
                 categoryName = newCategoryName
             }
             .addOnFailureListener { exception ->
-                Log.d("print", "Error getting documents.", exception)
+                //Log.d("print", "Error getting documents.", exception)
             }
     }
 
@@ -166,16 +166,16 @@ class EditCategoryViewModel(categoryName: String) : ViewModel() {
             .addOnSuccessListener { document ->
                 if (document.data!!.isNotEmpty()) {
                     userDocumentRef.update("listOfCategories", FieldValue.arrayRemove(categoryName))
-                    Log.d("print", "The category $categoryName was removed!")
+                    //Log.d("print", "The category $categoryName was removed!")
                     deleteDocumentsFromCategory(categoryName)
                     _categoryEditedSuccessfully.value = true
                     isChangingName = false
                 }else{
-                    Log.d("print", "Document empty!")
+                    //Log.d("print", "Document empty!")
                 }
             }
             .addOnFailureListener { exception ->
-                Log.d("print", "Error getting documents.", exception)
+                //Log.d("print", "Error getting documents.", exception)
             }
     }
 

@@ -40,26 +40,26 @@ class NewCategoryViewModel : ViewModel() {
 
                     if (categories != null) {
                         arrayOfCategories = categories.listOfCategories?.toMutableSet()!!
-                        Log.d("print", "DB accessed and categories loaded")
+                        //Log.d("print", "DB accessed and categories loaded")
 
                         if(categories.listOfCategories.contains(name)) {
                             _categoryAlreadyExists.value = true
-                            Log.d("print", "This category name already exists")
+                            //Log.d("print", "This category name already exists")
                         }else {
                             userDocumentRef.update("listOfCategories", FieldValue.arrayUnion(name))
                             setCategoryInformation(name, description, starLevel)
-                            Log.d("print", "Category $name created successfully")
+                            //Log.d("print", "Category $name created successfully")
                         }
                     }
                 }else{
-                    Log.d("print", "This user haven't created any category yet")
+                    //Log.d("print", "This user haven't created any category yet")
                     userDocumentRef.update("listOfCategories", FieldValue.arrayUnion(name))
                     setCategoryInformation(name, description, starLevel)
-                    Log.d("print", "Category $name created successfully")
+                    //Log.d("print", "Category $name created successfully")
                 }
             }
             .addOnFailureListener { exception ->
-                Log.d("print", "Error getting documents.", exception)
+                //Log.d("print", "Error getting documents.", exception)
             }
     }
 
@@ -77,14 +77,14 @@ class NewCategoryViewModel : ViewModel() {
             .addOnSuccessListener {
                 val description = hashMapOf("categoryDescription" to categoryDescription)
                 questionDocRef.set(description, SetOptions.merge())
-                Log.d("print", "Category description set")
+                //Log.d("print", "Category description set")
                 val starLevel = hashMapOf("starLevel" to categoryStarLevel)
                 questionDocRef.set(starLevel, SetOptions.merge())
-                Log.d("print", "Category star level set")
+                //Log.d("print", "Category star level set")
                 _categoryCreatedSuccessfully.value = true
             }
             .addOnFailureListener { exception ->
-                Log.d("print", "Error getting documents.", exception)
+                //Log.d("print", "Error getting documents.", exception)
             }
     }
 

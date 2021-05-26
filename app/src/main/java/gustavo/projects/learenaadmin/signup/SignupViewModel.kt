@@ -23,13 +23,13 @@ class SignupViewModel : ViewModel() {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener() { task ->
                 if (task.isSuccessful) {
-                    Log.d("print", "User registration completed...")
+                    //Log.d("print", "User registration completed...")
                     _userCreated.value = true
                     user = auth.currentUser!!
                     updateProfileName(name)
                     sendConfirmationEmail()
                 } else {
-                    Log.d("print", "User registration failed")
+                    //Log.d("print", "User registration failed")
                     _userCreated.value = false
                 }
             }
@@ -43,7 +43,7 @@ class SignupViewModel : ViewModel() {
         user.updateProfile(profileUpdates)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Log.d("print", "User profile name updated")
+                    //Log.d("print", "User profile name updated")
                 }
             }
     }
@@ -52,7 +52,7 @@ class SignupViewModel : ViewModel() {
         user.sendEmailVerification()
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Log.d("print", "Email sent.")
+                    //Log.d("print", "Email sent.")
                 }
             }
     }
