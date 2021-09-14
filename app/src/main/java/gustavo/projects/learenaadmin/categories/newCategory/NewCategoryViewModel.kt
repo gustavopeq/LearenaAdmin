@@ -35,7 +35,7 @@ class NewCategoryViewModel : ViewModel() {
         userDocumentRef
             .get()
             .addOnSuccessListener { document ->
-                if (document.data!!.isNotEmpty()) {
+                if (!document.data.isNullOrEmpty()) {
                     val categories = document.toObject<CategoryObject>()
 
                     if (categories != null) {
@@ -52,6 +52,11 @@ class NewCategoryViewModel : ViewModel() {
                         }
                     }
                 }else{
+                    if(document.data == null){
+                        val emptyListOfCategory = CategoryObject()
+                        userDocumentRef.set(emptyListOfCategory)
+                        //Log.d("print", "Empty list of category created")
+                    }
                     //Log.d("print", "This user haven't created any category yet")
                     userDocumentRef.update("listOfCategories", FieldValue.arrayUnion(name))
                     setCategoryInformation(name, description, starLevel)

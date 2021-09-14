@@ -38,7 +38,7 @@ class CategoriesViewModel : ViewModel() {
             .get()
             .addOnSuccessListener { document ->
                 var anyCategoryFound = false
-                if (document.data!!.isNotEmpty()) {
+                if (!document.data.isNullOrEmpty()) {
                     val categories = document.toObject<CategoryObject>()
 
                     if (categories != null && categories.listOfCategories!!.isNotEmpty()) {
