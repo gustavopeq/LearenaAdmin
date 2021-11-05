@@ -86,9 +86,13 @@ class EditCategory : Fragment(), INewCategoryForm, IKeyboardUtil {
         if(binding.editCategoryName.editText?.text.toString() == viewModel.categoryName) {
             viewModel.updateCategoryInformation(binding.editCategoryDescription.editText?.text.toString(), starLevel)
         }else {
-            viewModel.isChangingName = true
-            viewModel.updateCategoryInformation(binding.editCategoryDescription.editText?.text.toString(), starLevel)
-            viewModel.updateCategoryName(binding.editCategoryName.editText?.text.toString())
+            if(binding.editCategoryName.editText?.text.isNullOrBlank()) {
+                binding.editCategoryName.error = "Please enter a category name"
+            }else{
+                viewModel.isChangingName = true
+                viewModel.updateCategoryInformation(binding.editCategoryDescription.editText?.text.toString(), starLevel)
+                viewModel.updateCategoryName(binding.editCategoryName.editText?.text.toString())
+            }
         }
         hideKeyboard()
     }
