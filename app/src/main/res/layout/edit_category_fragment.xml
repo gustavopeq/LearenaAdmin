@@ -57,11 +57,11 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:id="@+id/difficultLevelTextView"
+            android:id="@+id/difficultyLevelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="9dp"
-            android:text="Difficult Level"
+            android:text="Difficulty Level"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="@+id/editCategoryDescription"
             app:layout_constraintTop_toBottomOf="@+id/editCategoryDescription" />
@@ -73,7 +73,7 @@
             android:layout_marginHorizontal="8dp"
             android:clickable="true"
             app:layout_constraintBottom_toBottomOf="@+id/starImg3"
-            app:layout_constraintStart_toEndOf="@+id/difficultLevelTextView"
+            app:layout_constraintStart_toEndOf="@+id/difficultyLevelTextView"
             app:layout_constraintTop_toTopOf="@+id/starImg3"
             app:srcCompat="@drawable/ic_star_24dp" />
 
@@ -93,9 +93,9 @@
             android:layout_height="wrap_content"
             android:layout_marginVertical="8dp"
             android:clickable="true"
-            app:layout_constraintBottom_toBottomOf="@+id/difficultLevelTextView"
+            app:layout_constraintBottom_toBottomOf="@+id/difficultyLevelTextView"
             app:layout_constraintStart_toEndOf="@+id/starImg2"
-            app:layout_constraintTop_toTopOf="@+id/difficultLevelTextView"
+            app:layout_constraintTop_toTopOf="@+id/difficultyLevelTextView"
             app:srcCompat="@drawable/ic_star_border_24dp" />
 
         <ImageView
