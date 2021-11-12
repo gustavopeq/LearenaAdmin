@@ -9,8 +9,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
-import gustavo.projects.learenaadmin.BasicDialogWindow
-import gustavo.projects.learenaadmin.INetworkCheck
+import gustavo.projects.learenaadmin.util.BasicDialogWindow
+import gustavo.projects.learenaadmin.util.INetworkCheck
 import gustavo.projects.learenaadmin.MainActivity
 
 import gustavo.projects.learenaadmin.R

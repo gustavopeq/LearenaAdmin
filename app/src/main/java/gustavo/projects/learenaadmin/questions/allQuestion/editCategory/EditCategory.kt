@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import gustavo.projects.learenaadmin.IKeyboardUtil
+import gustavo.projects.learenaadmin.util.IKeyboardUtil
 
 import gustavo.projects.learenaadmin.R
 import gustavo.projects.learenaadmin.categories.newCategory.INewCategoryForm

@@ -11,8 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputLayout
-import gustavo.projects.learenaadmin.BasicDialogWindow
-import gustavo.projects.learenaadmin.IKeyboardUtil
+import gustavo.projects.learenaadmin.util.BasicDialogWindow
+import gustavo.projects.learenaadmin.util.IKeyboardUtil
 
 import gustavo.projects.learenaadmin.R
 import gustavo.projects.learenaadmin.databinding.QuestionDetailsFragmentBinding

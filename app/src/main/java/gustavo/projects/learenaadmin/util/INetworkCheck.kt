@@ -1,4 +1,4 @@
-package gustavo.projects.learenaadmin
+package gustavo.projects.learenaadmin.util
 
 import android.content.Context
 import android.net.ConnectivityManager

@@ -13,8 +13,8 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 
 import gustavo.projects.learenaadmin.R
-import gustavo.projects.learenaadmin.IKeyboardUtil
-import gustavo.projects.learenaadmin.INetworkCheck
+import gustavo.projects.learenaadmin.util.IKeyboardUtil
+import gustavo.projects.learenaadmin.util.INetworkCheck
 import gustavo.projects.learenaadmin.databinding.NewCategoryFragmentBinding
 
 class NewCategory : Fragment(), IKeyboardUtil, INewCategoryForm, INetworkCheck {
